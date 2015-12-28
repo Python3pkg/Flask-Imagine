@@ -149,7 +149,7 @@ class Imagine(object):
         image = self.resize(image,
                             height=self.filters[filter_name]['height'],
                             mode='fit',
-                            width=self.filters[filter_name]['height'])
+                            width=self.filters[filter_name]['width'])
 
         format = (os.path.splitext(local_file_path)[1][1:] or 'jpeg').lower()
         format = {'jpg': 'jpeg'}.get(format, format)
