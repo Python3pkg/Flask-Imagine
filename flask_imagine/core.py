@@ -154,12 +154,14 @@ class Imagine(object):
         format = (os.path.splitext(local_file_path)[1][1:] or 'jpeg').lower()
         format = {'jpg': 'jpeg'}.get(format, format)
 
-        cache_file_path = current_app.config['IMAGINE_CACHE'] + '/' + filter_name + '/c_' + original_key.name
+        cache_file_path = current_app.config['IMAGINE_CACHE'] + '/' + filter_name + '/' + \
+                          os.path.dirname(original_key.name) + '/c_' + os.path.basename(original_key.name)
         cache_file = open(cache_file_path, 'wb')
         image.save(cache_file, format, quality=85)
         cache_file.close()
 
-        cached_key = self.bucket.new_key(current_app.config['IMAGINE_THUMBS_PATH'] + '/' + filter_name + '/' + original_key.name)
+        cached_key = self.bucket.new_key(current_app.config['IMAGINE_THUMBS_PATH'] + '/' + filter_name + '/' +
+                                         original_key.name)
         cached_key.set_contents_from_filename(cache_file_path)
         cached_key.make_public()
 
