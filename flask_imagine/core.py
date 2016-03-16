@@ -164,7 +164,7 @@ class Imagine(object):
         target_width = self.filters[filter_name]['width']
         target_height = self.filters[filter_name]['height']
 
-        if 'scale_sizes' not in self.filters[filter_name] or self.filters[filter_name]['scale_sizes']:
+        if 'scale_sizes' not in self.filters[filter_name] or not self.filters[filter_name]['scale_sizes']:
             original_width, original_height = image.size
             target_width, target_height = self.scale_sizes(original_width, original_height, target_width, target_height)
 
