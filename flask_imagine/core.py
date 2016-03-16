@@ -146,7 +146,7 @@ class Imagine(object):
         elif target_width <= original_width and target_height > original_height:
             k = original_width / original_height
             target_height = int(target_width / k)
-        elif target_width > original_width and target_height <= original_height::
+        elif target_width > original_width and target_height <= original_height:
             k = original_width / original_height
             target_width = target_height * k
 
