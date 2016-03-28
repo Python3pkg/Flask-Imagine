@@ -55,7 +55,11 @@ class Imagine(object):
 
         self.filters = self._prepare_filters(app.config['IMAGINE_FILTERS'])
 
-        app.add_url_rule(app.config['IMAGINE_URL'] + '/<regex("[^\/]+"):filter_name>/<path:path>', app.config['IMAGINE_NAME'], self.handle_request)
+        app.add_url_rule(
+            app.config['IMAGINE_URL'] + '/<regex("[^\/]+"):filter_name>/<path:path>',
+            app.config['IMAGINE_NAME'],
+            self.handle_request
+        )
 
         if hasattr(app, 'add_template_filter'):
             app.add_template_filter(imagine_filter, 'imagine_filter')
@@ -75,7 +79,8 @@ class Imagine(object):
         # todo: Must be realized in the future
         return filters_config
 
-    def generate_url(self, input_url):
+    @classmethod
+    def generate_url(cls, input_url):
         if current_app.config.get('IMAGINE_BASE_DOMAIN'):
             from urlparse import urlparse
 
@@ -127,11 +132,7 @@ class Imagine(object):
             elif 'default_image_path' in self.filters[filter_name]:
                 return self.filters[filter_name]['default_image_path']
             else:
-                raise OriginalKeyDoesNotExist(code=404,
-                                              msg='Original key <%s> does not exist in bucket: %s' % (
-                                                  path,
-                                                  self.bucket.name
-                                              ))
+                abort(404)
 
     def handle_request(self, filter_name, path):
         if filter_name not in self.filters:
