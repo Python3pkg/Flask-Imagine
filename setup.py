@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Imagine',
-    version='0.1.6',
+    version='0.1.7',
     description='Dynamic image resizing and storing on AWS S3 for Flask.',
     url='https://github.com/kronas/Flask-Imagine',
         
