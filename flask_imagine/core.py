@@ -143,7 +143,7 @@ class Imagine(object):
 
         if 'filter' in self.filters[filter_name]:
             if self.filters[filter_name]['filter'] == 'scale':
-                return self._scale(original_key, filter_name, path)
+                return self._scale(original_key, filter_name)
         else:
             raise ParameterNotFound(code=202, msg='Filter type for <%s> has been not present' % filter_name)
 
