@@ -1,2 +1,2 @@
-from .core import Imagine, imagine_filter
-from .size import ImageSize
+from .core import *
+from .size import *

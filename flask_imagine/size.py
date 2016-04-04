@@ -5,9 +5,10 @@ from PIL import Image
 from . import modes
 from .transform import Transform
 
+__all__ = ['ImageSize']
+
 
 class ImageSize(object):
-
     @property
     def image(self):
         if not self._image and self.path:
@@ -15,9 +16,8 @@ class ImageSize(object):
         return self._image
 
     def __init__(self, path=None, image=None, width=None, height=None,
-        enlarge=True, mode=None, transform=None, sharpen=None, _shortcut=False, **kw
-    ):
-
+                 enlarge=True, mode=None, transform=None, sharpen=None, _shortcut=False, **kw
+                 ):
         # Inputs.
         self.__dict__.update(kw)
         self.path = path

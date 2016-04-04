@@ -13,6 +13,8 @@ from .regex_route import RegexConverter
 from .size import ImageSize
 from .transform import Transform
 
+__all__ = ['Imagine', 'imagine_filter']
+
 
 def makedirs(path):
     try:
