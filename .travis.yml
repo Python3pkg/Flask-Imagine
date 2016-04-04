@@ -20,6 +20,7 @@ before_install:
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so ~/virtualenv/python2.7/lib/
   - pip install nose
   - pip install boto>=2.38.0
+  - pip install moto
   - pip install codecov
 
 install:
