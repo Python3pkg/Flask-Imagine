@@ -2,13 +2,14 @@ from __future__ import division
 
 import os
 import errno
+import boto
 from PIL import Image
-from boto.s3.connection import S3Connection
 from flask import current_app, request, abort, redirect
 from urllib import quote as urlquote
 
 from . import modes
-from .exception import ParameterNotFound, FilterNotFound, OriginalKeyDoesNotExist
+from .exception import ParameterNotFound, FilterNotFound
+from .regex_route import RegexConverter
 from .size import ImageSize
 from .transform import Transform
 
@@ -47,14 +48,15 @@ class Imagine(object):
                     or 'IMAGINE_S3_BUCKET' not in app.config:
                 raise ParameterNotFound(code=101, msg='S3 credentials has been not present')
 
-        self.s3_conn = S3Connection(app.config['IMAGINE_S3_ACCESS_KEY'], app.config['IMAGINE_S3_SECRET_KEY'])
-        self.bucket = self.s3_conn.get_bucket(app.config['IMAGINE_S3_BUCKET'])
+        self.s3_conn = boto.connect_s3(app.config['IMAGINE_S3_ACCESS_KEY'], app.config['IMAGINE_S3_SECRET_KEY'])
+        self.bucket = self.s3_conn.create_bucket(app.config['IMAGINE_S3_BUCKET'])
 
         if 'IMAGINE_FILTERS' not in app.config:
             raise ParameterNotFound(code=102, msg='Filters configuration has been not present')
 
         self.filters = self._prepare_filters(app.config['IMAGINE_FILTERS'])
 
+        app.url_map.converters['regex'] = RegexConverter
         app.add_url_rule(
             app.config['IMAGINE_URL'] + '/<regex("[^\/]+"):filter_name>/<path:path>',
             app.config['IMAGINE_NAME'],
@@ -141,7 +143,7 @@ class Imagine(object):
 
         if 'filter' in self.filters[filter_name]:
             if self.filters[filter_name]['filter'] == 'scale':
-                return self._scale(original_key, filter_name)
+                return self._scale(original_key, filter_name, path)
         else:
             raise ParameterNotFound(code=202, msg='Filter type for <%s> has been not present' % filter_name)
 
@@ -190,13 +192,13 @@ class Imagine(object):
                             mode='fit',
                             width=target_width)
 
-        format = (os.path.splitext(local_file_path)[1][1:] or 'jpeg').lower()
-        format = {'jpg': 'jpeg'}.get(format, format)
+        file_format = (os.path.splitext(local_file_path)[1][1:] or 'jpeg').lower()
+        file_format = {'jpg': 'jpeg'}.get(file_format, file_format)
 
         cache_file_path = current_app.config['IMAGINE_CACHE'] + '/' + filter_name + '/' + \
-                          os.path.dirname(original_key.name) + '/c_' + os.path.basename(original_key.name)
+            os.path.dirname(original_key.name) + '/c_' + os.path.basename(original_key.name)
         cache_file = open(cache_file_path, 'wb')
-        image.save(cache_file, format, quality=85)
+        image.save(cache_file, file_format, quality=85)
         cache_file.close()
 
         cached_key = self.bucket.new_key(current_app.config['IMAGINE_THUMBS_PATH'] + '/' + filter_name + '/' +
@@ -209,8 +211,8 @@ class Imagine(object):
 
         return redirect(self.generate_url(cached_key.generate_url(expires_in=0, query_auth=False)), code=301)
 
-    def resize(self, image, background=None, **kw):
-
+    @classmethod
+    def resize(cls, image, background=None, **kw):
         size = ImageSize(image=image, **kw)
 
         # Get into the right colour space.
