@@ -152,7 +152,7 @@ class Imagine(object):
 
         return app
 
-    def handle_request(self, filter_name, path, **kwargs):
+    def handle_request(self, filter_name, path):
         """
         Handle image request
         :param filter_name: filter_name
@@ -181,7 +181,7 @@ class Imagine(object):
             abort(404)
 
 
-def imagine_filter(path, filter_name, **kwargs):
+def imagine_filter(path, filter_name):
     """
     Template filter
     :param path: image path
@@ -190,4 +190,4 @@ def imagine_filter(path, filter_name, **kwargs):
     :return:
     """
     self = current_app.extensions['imagine']
-    return self.build_url(path, filter_name, **kwargs)
+    return self.build_url(path, filter_name)
