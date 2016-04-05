@@ -1,8 +1,10 @@
-from moto import mock_s3
+import flask
+import os
+import shutil
 import unittest
 from flask import Flask
-import flask
 from flask.ext.imagine import Imagine
+from moto import mock_s3
 
 flask_version = tuple(map(int, flask.__version__.split('.')))
 
@@ -10,6 +12,7 @@ flask_version = tuple(map(int, flask.__version__.split('.')))
 class TestCase(unittest.TestCase):
     @mock_s3
     def setUp(self):
+        self.remove_cache()
         self.app = self.create_app()
         self.app_ctx = self.app.app_context()
         self.app_ctx.push()
@@ -17,20 +20,35 @@ class TestCase(unittest.TestCase):
         self.req_ctx.push()
         self.client = self.app.test_client()
 
+    def remove_cache(self):
+        cache_path = os.path.abspath(os.path.dirname(__file__)) + '/assets/cache'
+        shutil.rmtree(cache_path)
+
     @mock_s3
     def create_app(self):
         app = Flask(__name__)
         app.config['TESTING'] = True
         app.config['SERVER_NAME'] = 'localhost'
         app.config['SECRET_KEY'] = 'secret secret'
-        app.config['IMAGINE_S3_ACCESS_KEY'] = 'access_key'
-        app.config['IMAGINE_S3_SECRET_KEY'] = 'secret_key'
-        app.config['IMAGINE_S3_BUCKET'] = 'bucket'
-        app.config['IMAGINE_FILTERS'] = {
+
+        app.config['IMAGINE_ADAPTER'] = {
+            'name': 'fs',
+            'source_folder': '/assets/',
+            'cache_folder': '/cache/'
+        }
+
+        # app.config['IMAGINE_ADAPTER'] = {
+        #     'name': 's3',
+        #     'access_key': 'access_key',
+        #     'secret_key': 'secret_key',
+        #     'bucket': 'bucket'
+        # }
+
+        app.config['IMAGINE_FILTER_SETS'] = {
             'test_scale': {
-                'filter': 'scale',
-                'width': 105,
-                'height': 65
+                'filters': {
+                    'thumbnail': {'size': [100, 100], 'mode': 'inset'}
+                }
             }
         }
         self.images = Imagine(app)
@@ -38,3 +56,6 @@ class TestCase(unittest.TestCase):
 
     def assert200(self, res):
         self.assertEqual(res.status_code, 200)
+
+    def assert302(self, res):
+        self.assertEqual(res.status_code, 302)

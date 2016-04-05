@@ -11,6 +11,9 @@ TRANSFORM_AXIS = {
 
 
 class Transform(list):
+    """
+    @deprecated
+    """
 
     def __init__(self, spec, image_size=None):
 

@@ -1,4 +1,6 @@
-
+"""
+@deprecated
+"""
 FIT = 'fit'
 CROP = 'crop'
 PAD = 'pad'

@@ -25,6 +25,9 @@ def makedirs(path):
 
 
 class Imagine(object):
+    """
+    @deprecated
+    """
     filters = {}
     s3_conn = None
     bucket = None

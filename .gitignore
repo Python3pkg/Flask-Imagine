@@ -60,3 +60,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Caches
+demo/static/cache
+tests/assets/cache

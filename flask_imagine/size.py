@@ -9,6 +9,9 @@ __all__ = ['ImageSize']
 
 
 class ImageSize(object):
+    """
+    @deprecated
+    """
     @property
     def image(self):
         if not self._image and self.path:
