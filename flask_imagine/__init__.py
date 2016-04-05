@@ -2,8 +2,7 @@ from __future__ import division
 
 from flask import current_app, abort, redirect
 
-from .adapters.s3 import ImagineS3Adapter
-from .adapters.filesystem import ImagineFilesystemAdapter
+from .adapters import ImagineFilesystemAdapter, ImagineS3Adapter
 from .filters import ThumbnailFilter
 from .filters.interface import ImagineFilterInterface
 from .helpers.regex_route import RegexConverter

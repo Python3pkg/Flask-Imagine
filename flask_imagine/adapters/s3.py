@@ -1,6 +1,5 @@
 import boto
-
-from . import ImagineAdapterInterface
+from .interface import ImagineAdapterInterface
 
 
 class ImagineS3Adapter(ImagineAdapterInterface):

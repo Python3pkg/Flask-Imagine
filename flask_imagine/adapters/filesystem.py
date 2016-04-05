@@ -1,7 +1,7 @@
 import errno
 import os
 from flask import current_app
-from . import ImagineAdapterInterface
+from .interface import ImagineAdapterInterface
 from PIL import Image
 
 
