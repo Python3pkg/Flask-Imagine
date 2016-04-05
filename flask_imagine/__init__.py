@@ -4,7 +4,6 @@ from flask import current_app, abort, redirect
 
 from .adapters.s3 import ImagineS3Adapter
 from .adapters.filesystem import ImagineFilesystemAdapter
-from .exceptions import ParameterNotFound, FilterNotFound
 from .filters import ThumbnailFilter
 from .filters.interface import ImagineFilterInterface
 from .helpers.regex_route import RegexConverter
@@ -91,7 +90,7 @@ class Imagine(object):
                 else:
                     raise ValueError('Wrong settings for filter: %s' % filter_name)
         else:
-            raise ParameterNotFound(code=102, msg='Filters configuration does not present')
+            raise ValueError('Filters configuration does not present')
 
     def _add_url_rule(self, app):
         app.url_map.converters['regex'] = RegexConverter

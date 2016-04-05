@@ -372,3 +372,10 @@ class TestThumbnailFilter(unittest.TestCase):
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
+
+    def test_wrong_thumbnail_size(self):
+        with self.assertRaises(ValueError):
+            ThumbnailFilter(**{})
+
+        with self.assertRaises(ValueError):
+            ThumbnailFilter(**{'size': 'size'})

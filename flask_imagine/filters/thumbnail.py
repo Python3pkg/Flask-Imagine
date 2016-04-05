@@ -17,7 +17,7 @@ class ThumbnailFilter(ImagineFilterInterface):
             self.width = size[0]
             self.height = size[1]
         else:
-            ValueError('Thumbnail size is not set.')
+            raise ValueError('Thumbnail size is not set.')
 
     def apply(self, resource):
         original_width, original_height = resource.size

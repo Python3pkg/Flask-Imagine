@@ -37,13 +37,6 @@ class TestCase(unittest.TestCase):
             'cache_folder': '/cache/'
         }
 
-        # app.config['IMAGINE_ADAPTER'] = {
-        #     'name': 's3',
-        #     'access_key': 'access_key',
-        #     'secret_key': 'secret_key',
-        #     'bucket': 'bucket'
-        # }
-
         app.config['IMAGINE_FILTER_SETS'] = {
             'test_scale': {
                 'filters': {
