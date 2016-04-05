@@ -3,12 +3,19 @@ from .interface import ImagineFilterInterface
 
 
 class ThumbnailFilter(ImagineFilterInterface):
+    """
+    Thumbnail filter
+    """
     modes = ['inset', 'outbound']
     mode = 'inset'
     width = 0
     height = 0
 
     def __init__(self, **kwargs):
+        """
+        Filter initialization
+        :param kwargs: parameters
+        """
         if 'mode' in kwargs and kwargs['mode'] in self.modes:
             self.mode = kwargs.pop('mode')
 
@@ -20,6 +27,11 @@ class ThumbnailFilter(ImagineFilterInterface):
             raise ValueError('Thumbnail size is not set.')
 
     def apply(self, resource):
+        """
+        Apply filter to resource
+        :param resource: Image
+        :return: Image
+        """
         original_width, original_height = resource.size
 
         if self.mode == 'outbound':
@@ -36,6 +48,14 @@ class ThumbnailFilter(ImagineFilterInterface):
 
     @classmethod
     def inset_sizes(cls, original_width, original_height, target_width, target_height):
+        """
+        Calculate new image sizes for inset mode
+        :param original_width: int
+        :param original_height: int
+        :param target_width: int
+        :param target_height: int
+        :return: tuple(int, int)
+        """
         if target_width >= original_width and target_height >= original_height:
             target_width = float(original_width)
             target_height = original_height
@@ -62,6 +82,14 @@ class ThumbnailFilter(ImagineFilterInterface):
 
     @classmethod
     def outbound_sizes(cls, original_width, original_height, target_width, target_height):
+        """
+        Calculate new image sizes for outbound mode
+        :param original_width: int
+        :param original_height: int
+        :param target_width: int
+        :param target_height: int
+        :return: tuple(int, int)
+        """
         if target_width <= original_width and target_height <= original_height:
             k = original_width / float(original_height)
             k_w = original_width / float(target_width)
@@ -81,6 +109,14 @@ class ThumbnailFilter(ImagineFilterInterface):
 
     @classmethod
     def crop_sizes(cls, original_width, original_height, target_width, target_height):
+        """
+        Calculate crop parameters for outbound mode
+        :param original_width: int
+        :param original_height: int
+        :param target_width: int
+        :param target_height: int
+        :return: tuple(int, int, int, int)
+        """
         if target_width < original_width:
             left = abs(original_width - target_width) / 2
             right = left + target_width

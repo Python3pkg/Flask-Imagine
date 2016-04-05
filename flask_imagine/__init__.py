@@ -11,14 +11,25 @@ __all__ = ['Imagine', 'imagine_filter']
 
 
 class Imagine(object):
+    """
+    Flask Imagine extension
+    """
     filter_sets = {}
     adapter = None
 
     def __init__(self, app=None):
+        """
+        :param app: Flask application
+        :return:
+        """
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
+        """
+        :param app: Flask application
+        :return:
+        """
         if not hasattr(app, 'extensions'):
             app.extensions = {}
         app.extensions['imagine'] = self
@@ -33,6 +44,11 @@ class Imagine(object):
 
     @classmethod
     def _set_defaults(cls, app):
+        """
+        Set default configuration parameters
+        :param app: Flask application
+        :return:
+        """
         app.config.setdefault('IMAGINE_URL', '/media/cache/resolve')
         app.config.setdefault('IMAGINE_NAME', 'imagine')
         app.config.setdefault('IMAGINE_THUMBS_PATH', 'cache/')
@@ -55,6 +71,11 @@ class Imagine(object):
         return app
 
     def _handle_adapter(self, app):
+        """
+        Handle storage adapter configuration
+        :param app: Flask application
+        :return:
+        """
         if 'IMAGINE_ADAPTER' in app.config \
                 and 'name' in app.config['IMAGINE_ADAPTER'] \
                 and app.config['IMAGINE_ADAPTER']['name'] in app.config['IMAGINE_ADAPTERS'].keys():
@@ -65,6 +86,11 @@ class Imagine(object):
             raise ValueError('Unknown adapter type')
 
     def _handle_filter_sets(self, app):
+        """
+        Handle filter sets
+        :param app: Flask application
+        :return:
+        """
         if 'IMAGINE_FILTER_SETS' in app.config and isinstance(app.config['IMAGINE_FILTER_SETS'], dict):
             for filter_name, filters_settings in app.config['IMAGINE_FILTER_SETS'].iteritems():
                 filter_set = []
@@ -92,6 +118,11 @@ class Imagine(object):
             raise ValueError('Filters configuration does not present')
 
     def _add_url_rule(self, app):
+        """
+        Add url rule for get filtered images
+        :param app: Flask application
+        :return:
+        """
         app.url_map.converters['regex'] = RegexConverter
         app.add_url_rule(
             app.config['IMAGINE_URL'] + '/<regex("[^\/]+"):filter_name>/<path:path>',
@@ -103,6 +134,11 @@ class Imagine(object):
 
     @classmethod
     def _add_template_filter(cls, app):
+        """
+        Add template filter
+        :param app: Flask application
+        :return:
+        """
         if hasattr(app, 'add_template_filter'):
             app.add_template_filter(imagine_filter, 'imagine_filter')
         else:
@@ -114,6 +150,13 @@ class Imagine(object):
         return app
 
     def handle_request(self, filter_name, path, **kwargs):
+        """
+        Handle image request
+        :param filter_name: filter_name
+        :param path: image_path
+        :param kwargs:
+        :return:
+        """
         if filter_name in self.filter_sets:
             if self.filter_sets[filter_name]['cached']:
                 if self.adapter.check_cached_item('%s/%s' % (filter_name, path)):
@@ -136,5 +179,12 @@ class Imagine(object):
 
 
 def imagine_filter(path, filter_name, **kwargs):
+    """
+    Template filter
+    :param path: image path
+    :param filter_name: filter_name
+    :param kwargs:
+    :return:
+    """
     self = current_app.extensions['imagine']
     return self.build_url(path, filter_name, **kwargs)
