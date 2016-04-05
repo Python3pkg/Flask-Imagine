@@ -1,3 +1,6 @@
+"""
+This module implemented a Regexp route handler.
+"""
 from werkzeug.routing import BaseConverter
 
 

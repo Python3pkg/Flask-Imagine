@@ -1,3 +1,8 @@
+"""
+This module implement a storage adapter interface.
+"""
+
+
 class ImagineAdapterInterface(object):
     """
     Storage adapter interface

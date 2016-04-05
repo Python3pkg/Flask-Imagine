@@ -1,3 +1,6 @@
+"""
+This module implement a Thumbnail filter.
+"""
 from PIL import Image
 from .interface import ImagineFilterInterface
 

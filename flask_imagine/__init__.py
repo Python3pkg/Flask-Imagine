@@ -1,3 +1,6 @@
+"""
+Flask Imagine extension.
+"""
 from __future__ import division
 
 from flask import current_app, abort, redirect

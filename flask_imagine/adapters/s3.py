@@ -1,3 +1,6 @@
+"""
+This module implement a Amazon AWS S3 storage adapter.
+"""
 import boto
 from .interface import ImagineAdapterInterface
 

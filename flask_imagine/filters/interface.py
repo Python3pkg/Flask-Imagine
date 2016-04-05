@@ -1,3 +1,8 @@
+"""
+This module implement a filter interface.
+"""
+
+
 class ImagineFilterInterface(object):
     """
     Filter interface

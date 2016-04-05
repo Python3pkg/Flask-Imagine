@@ -1,3 +1,6 @@
+"""
+This module implement a filesystem storage adapter.
+"""
 import errno
 import os
 from flask import current_app
@@ -31,7 +34,13 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return: Image
         """
-        return Image.open('%s/%s/%s' % (current_app.root_path, self.source_folder, path.strip('/')))
+        return Image.open(
+            '%s/%s/%s' % (
+                current_app.root_path,
+                self.source_folder,
+                path.strip('/')
+            )
+        )
 
     def create_cached_item(self, path, content):
         """
@@ -40,7 +49,12 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param content: Image
         :return:
         """
-        item_path = '%s/%s/%s/%s' % (current_app.root_path, self.source_folder, self.cache_folder, path.strip('/'))
+        item_path = '%s/%s/%s/%s' % (
+            current_app.root_path,
+            self.source_folder,
+            self.cache_folder,
+            path.strip('/')
+        )
         self.make_dirs(item_path)
 
         content.save(item_path)
@@ -53,7 +67,14 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return:
         """
-        return Image.open('%s/%s/%s/%s' % (current_app.root_path, self.source_folder, self.cache_folder, path.strip('/')))
+        return Image.open(
+            '%s/%s/%s/%s' % (
+                current_app.root_path,
+                self.source_folder,
+                self.cache_folder,
+                path.strip('/')
+            )
+        )
 
     def check_cached_item(self, path):
         """
@@ -62,7 +83,12 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :return:
         """
         return os.path.isfile(
-            '%s/%s/%s/%s' % (current_app.root_path, self.source_folder, self.cache_folder, path.strip('/'))
+            '%s/%s/%s/%s' % (
+                current_app.root_path,
+                self.source_folder,
+                self.cache_folder,
+                path.strip('/')
+            )
         )
 
     def remove_cached_item(self, path):
@@ -71,7 +97,14 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return:
         """
-        os.remove('%s/%s/%s/%s' % (current_app.root_path, self.source_folder, self.cache_folder, path.strip('/')))
+        os.remove(
+            '%s/%s/%s/%s' % (
+                current_app.root_path,
+                self.source_folder,
+                self.cache_folder,
+                path.strip('/')
+            )
+        )
 
         return True
 
@@ -84,6 +117,6 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         """
         try:
             os.makedirs(os.path.dirname(path))
-        except OSError as e:
-            if e.errno != errno.EEXIST:
+        except OSError as error:
+            if error.errno != errno.EEXIST:
                 raise
