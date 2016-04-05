@@ -10,5 +10,6 @@ Flask-Imagine
 [![Build Status](https://scrutinizer-ci.com/g/kronas/Flask-Imagine/badges/build.png?b=master)](https://scrutinizer-ci.com/g/kronas/Flask-Imagine/build-status/master)
 [![Code Health](https://landscape.io/github/kronas/Flask-Imagine/master/landscape.svg?style=flat)](https://landscape.io/github/kronas/Flask-Imagine/master)
 [![codecov.io](https://codecov.io/github/kronas/Flask-Imagine/coverage.svg?branch=master)](https://codecov.io/github/kronas/Flask-Imagine?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/flask-imagine/badge/?version=latest)](http://flask-imagine.readthedocs.org/en/latest/?badge=latest)
 
 Flask-Imagine is a Flask extension that provides dynamic image resizing storing on AWS S3 for your application.
