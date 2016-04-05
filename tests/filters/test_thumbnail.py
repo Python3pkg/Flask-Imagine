@@ -379,3 +379,8 @@ class TestThumbnailFilter(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             ThumbnailFilter(**{'size': 'size'})
+
+    def test_wrong_resource_type(self):
+        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        with self.assertRaises(ValueError):
+            thumbnail_filter.apply('')

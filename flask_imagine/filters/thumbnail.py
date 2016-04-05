@@ -35,6 +35,9 @@ class ThumbnailFilter(ImagineFilterInterface):
         :param resource: Image
         :return: Image
         """
+        if not isinstance(resource, Image.Image):
+            raise ValueError('Unknown resource format')
+
         original_width, original_height = resource.size
 
         if self.mode == 'outbound':
@@ -97,8 +100,6 @@ class ThumbnailFilter(ImagineFilterInterface):
             k = original_width / float(original_height)
             k_w = original_width / float(target_width)
             k_h = original_height / float(target_height)
-
-            print(k, k_w, k_h)
 
             if k_w > k_h:
                 target_width = int(target_height * k)
