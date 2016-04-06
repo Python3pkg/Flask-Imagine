@@ -46,7 +46,7 @@ class TestCase(unittest.TestCase):
                 }
             }
         }
-        self.images = Imagine(app)
+        self.imagine = Imagine(app)
         return app
 
     def assert200(self, res):

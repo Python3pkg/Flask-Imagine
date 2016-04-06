@@ -26,7 +26,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         else:
             raise ValueError('Folder is not set.')
 
-        self.cache_folder = kwargs['cache_folder'].strip('/')
+        self.cache_folder = kwargs.pop('cache_folder', 'cache').strip('/')
 
     def get_item(self, path):
         """

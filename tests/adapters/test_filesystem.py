@@ -1,12 +1,15 @@
+import os
 from PIL import Image
+from flask import Flask
+from flask.ext.imagine import Imagine
 from tests import TestCase
 
 
-class TestImagineFilesystemAdapter(TestCase):
+class TestSuccessImagineFilesystemAdapter(TestCase):
     adapter = None
 
     def setUp(self):
-        super(TestImagineFilesystemAdapter, self).setUp()
+        super(TestSuccessImagineFilesystemAdapter, self).setUp()
 
         self.adapter = self.app.extensions['imagine'].adapter
 
@@ -28,3 +31,33 @@ class TestImagineFilesystemAdapter(TestCase):
     def test_make_dirs_method(self):
         with self.assertRaises(Exception):
             self.adapter.make_dirs('')
+
+    def test_init_without_source_folder(self):
+        app = Flask(__name__)
+        app.root_path = os.path.abspath(os.path.normpath(os.path.dirname(__file__) + '/../'))
+        app.config['TESTING'] = True
+        app.config['SERVER_NAME'] = 'localhost'
+        app.config['SECRET_KEY'] = 'secret secret'
+
+        app.config['IMAGINE_ADAPTER'] = {
+            'name': 'fs',
+            'cache_folder': '/cache/'
+        }
+
+        with self.assertRaises(ValueError):
+            Imagine(app)
+
+    def test_init_without_cache_folder(self):
+        app = Flask(__name__)
+        app.root_path = os.path.abspath(os.path.normpath(os.path.dirname(__file__) + '/../'))
+        app.config['TESTING'] = True
+        app.config['SERVER_NAME'] = 'localhost'
+        app.config['SECRET_KEY'] = 'secret secret'
+
+        app.config['IMAGINE_ADAPTER'] = {
+            'name': 'fs',
+            'source_folder': '/static/'
+        }
+
+        imagine = Imagine(app)
+        self.assertTrue(isinstance(imagine, Imagine))
