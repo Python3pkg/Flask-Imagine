@@ -1,7 +1,6 @@
 language: python
 
 git:
-  # Testing doesn't need Flask themes.
   submodules: false
 
 python:
@@ -18,11 +17,11 @@ before_install:
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so.8 ~/virtualenv/python2.7/lib/
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so ~/virtualenv/python2.7/lib/
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so ~/virtualenv/python2.7/lib/
-  - pip install nose
+  - pip install Pillow==3.1.2
   - pip install boto>=2.38.0
   - pip install moto
+  - pip install nose
   - pip install codecov
-  - pip install Pillow>=3.2.0
 
 install:
   - pip install Flask$FLASK_VERSION
