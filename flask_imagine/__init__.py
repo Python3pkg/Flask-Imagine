@@ -5,7 +5,7 @@ from __future__ import division
 
 from flask import current_app, abort, redirect
 
-from .adapters import ImagineFilesystemAdapter, ImagineS3Adapter
+from .adapters import ImagineFilesystemAdapter
 from .filters import AutorotateFilter, ThumbnailFilter
 from .filters.interface import ImagineFilterInterface
 from .helpers.regex_route import RegexConverter
@@ -59,7 +59,6 @@ class Imagine(object):
 
         app.config.setdefault('IMAGINE_ADAPTERS', {
             'fs': ImagineFilesystemAdapter,
-            's3': ImagineS3Adapter
         })
         app.config.setdefault('IMAGINE_FILTERS', {
             'autorotate': AutorotateFilter,

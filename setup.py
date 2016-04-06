@@ -20,7 +20,6 @@ setup(
 
     install_requires=[
 
-        'boto>=2.38.0',
         'Flask>=0.9',
         'itsdangerous>=0.24',  # For Flask v0.9
         'Pillow==3.1.2',

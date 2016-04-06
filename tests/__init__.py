@@ -4,13 +4,11 @@ import shutil
 import unittest
 from flask import Flask
 from flask.ext.imagine import Imagine
-from moto import mock_s3
 
 flask_version = tuple(map(int, flask.__version__.split('.')))
 
 
 class TestCase(unittest.TestCase):
-    @mock_s3
     def setUp(self):
         self.remove_cache()
         self.app = self.create_app()
@@ -24,7 +22,6 @@ class TestCase(unittest.TestCase):
         cache_path = os.path.abspath(os.path.dirname(__file__)) + '/assets/cache'
         shutil.rmtree(cache_path)
 
-    @mock_s3
     def create_app(self):
         app = Flask(__name__)
         app.config['TESTING'] = True
