@@ -18,9 +18,14 @@ class TestCase(unittest.TestCase):
         self.req_ctx.push()
         self.client = self.app.test_client()
 
+    def tearDown(self):
+        self.app = None
+        self.remove_cache()
+
     def remove_cache(self):
-        cache_path = os.path.abspath(os.path.dirname(__file__)) + '/assets/cache'
-        shutil.rmtree(cache_path)
+        cache_path = os.path.abspath(os.path.dirname(__file__)) + '/static/cache'
+        if os.path.exists(cache_path):
+            shutil.rmtree(cache_path)
 
     def create_app(self):
         app = Flask(__name__)
@@ -30,7 +35,7 @@ class TestCase(unittest.TestCase):
 
         app.config['IMAGINE_ADAPTER'] = {
             'name': 'fs',
-            'source_folder': '/assets/',
+            'source_folder': '/static/',
             'cache_folder': '/cache/'
         }
 

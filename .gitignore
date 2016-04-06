@@ -63,4 +63,4 @@ target/
 
 # Caches
 demo/static/cache
-tests/assets/cache
+tests/static/cache

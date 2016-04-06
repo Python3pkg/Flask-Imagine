@@ -71,6 +71,8 @@ class Imagine(object):
             'cache_folder': '/cache/'
         })
 
+        app.config.setdefault('IMAGINE_FILTER_SETS', {})
+
         return app
 
     def _handle_adapter(self, app):

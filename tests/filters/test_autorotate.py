@@ -13,7 +13,7 @@ class TestAutorotateFilter(unittest.TestCase):
     image_bmp = None
 
     def setUp(self):
-        assets_path = os.path.abspath(os.path.dirname(__file__)) + '/../assets/'
+        assets_path = os.path.abspath(os.path.dirname(__file__)) + '/../static/'
         assets_path = os.path.normpath(assets_path)
 
         image_png_path = assets_path + '/flask.png'
