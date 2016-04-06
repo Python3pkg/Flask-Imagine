@@ -11,12 +11,13 @@ setup(
     version='0.2.1',
     description='Extension which provides easy image manipulation support in Flask applications.',
     url='https://github.com/FlaskGuys/Flask-Imagine',
-        
+    platform='*nix',
+
     author='Kronas',
     author_email='kronas.sw@gmail.com',
     license='MIT',
 
-    packages=['flask_imagine'],
+    packages=['flask_imagine', 'flask_imagine.adapters', 'flask_imagine.filters', 'flask_imagine.helpers'],
 
     install_requires=[
 
