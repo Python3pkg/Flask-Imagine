@@ -1,9 +1,20 @@
+"""
+This module implement a Autorotate filter.
+"""
 from PIL import Image
 from .interface import ImagineFilterInterface
 
 
 class AutorotateFilter(ImagineFilterInterface):
+    """
+    Autorotate filter
+    """
     def apply(self, resource):
+        """
+        Apply filter to resource
+        :param resource: Image
+        :return: Image
+        """
         if not isinstance(resource, Image.Image):
             raise ValueError('Unknown resource format')
 
