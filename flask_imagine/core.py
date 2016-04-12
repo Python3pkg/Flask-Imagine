@@ -21,6 +21,7 @@ class Imagine(object):
     }
     filters = {
         'autorotate': AutorotateFilter,
+        'downscale': DownscaleFilter,
         'relative_resize': RelativeResizeFilter,
         'thumbnail': ThumbnailFilter,
         'upscale': UpscaleFilter
