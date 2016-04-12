@@ -1,7 +1,7 @@
 """
 Flask Imagine extension.
 """
-from __future__ import division
+import logging
 
 from flask import current_app, abort, redirect
 
@@ -11,6 +11,8 @@ from .filters.interface import ImagineFilterInterface
 from .helpers.regex_route import RegexConverter
 
 __all__ = ['Imagine', 'imagine_filter']
+
+LOGGER = logging.getLogger(__file__)
 
 
 class Imagine(object):
@@ -175,11 +177,16 @@ class Imagine(object):
 
             resource = self.adapter.get_item(path)
 
-            for filter_item in self.filter_sets[filter_name]['filters']:
-                resource = filter_item.apply(resource)
+            if resource:
+                for filter_item in self.filter_sets[filter_name]['filters']:
+                    resource = filter_item.apply(resource)
 
-            return redirect(self.adapter.create_cached_item('%s/%s' % (filter_name, path), resource))
+                return redirect(self.adapter.create_cached_item('%s/%s' % (filter_name, path), resource))
+            else:
+                LOGGER.warning('File "%s" not found.' % path)
+                abort(404)
         else:
+            LOGGER.warning('Filter "%s" not found.' % filter_name)
             abort(404)
 
 
