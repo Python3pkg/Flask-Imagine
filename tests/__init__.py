@@ -41,6 +41,7 @@ class TestCase(unittest.TestCase):
 
         app.config['IMAGINE_FILTER_SETS'] = {
             'test_scale': {
+                'cached': True,
                 'filters': {
                     'thumbnail': {'size': [100, 100], 'mode': 'inset'}
                 }
@@ -54,3 +55,6 @@ class TestCase(unittest.TestCase):
 
     def assert302(self, res):
         self.assertEqual(res.status_code, 302)
+
+    def assert404(self, res):
+        self.assertEqual(res.status_code, 404)

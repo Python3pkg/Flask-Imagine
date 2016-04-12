@@ -1,7 +1,6 @@
 import os
 import unittest
 from copy import copy
-
 from PIL import Image
 from flask.ext.imagine.filters.autorotate import AutorotateFilter
 
