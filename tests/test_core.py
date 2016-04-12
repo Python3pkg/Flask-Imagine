@@ -15,10 +15,10 @@ class TestCoreMethods(TestCase):
             Imagine(app)
 
     def test_wrong_filter_init(self):
+        app = Flask(__name__)
+
         class WrongFilter(object):
             pass
-
-        app = Flask(__name__)
 
         app.config['IMAGINE_FILTERS'] = {
             'wrong_filter': WrongFilter
@@ -26,8 +26,34 @@ class TestCoreMethods(TestCase):
 
         app.config['IMAGINE_FILTER_SETS'] = {
             'wrong_set': {
-                'wrong_filter': {}
+                'filters': {
+                    'wrong_filter': {}
+                }
             }
+        }
+
+        with self.assertRaises(ValueError):
+            Imagine(app)
+
+    def test_unknown_filter_init(self):
+        app = Flask(__name__)
+
+        app.config['IMAGINE_FILTER_SETS'] = {
+            'wrong_set': {
+                'filters': {
+                    'wrong_filter': {}
+                }
+            }
+        }
+
+        with self.assertRaises(ValueError):
+            Imagine(app)
+
+    def test_wrong_filter_set_init(self):
+        app = Flask(__name__)
+
+        app.config['IMAGINE_FILTER_SETS'] = {
+            'wrong_set': {}
         }
 
         with self.assertRaises(ValueError):
