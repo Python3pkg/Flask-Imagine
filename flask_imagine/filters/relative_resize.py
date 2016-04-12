@@ -9,28 +9,29 @@ class RelativeResizeFilter(ImagineFilterInterface):
     """
     Relative resize filter
     """
-    methods = ['heighten', 'widen', 'increase', 'scale']
+    methods = ['heighten', 'widen', 'increase', 'decrease', 'scale']
     method = None
     value = None
 
-    def __init__(self, method, value):
+    def __init__(self, **kwargs):
         """
-        :param method: str
-        :param value: int or float
+        :param kwargs: dict
         """
-        if method in self.methods:
-            self.method = method
-        else:
-            raise ValueError('Unknown method: %s' % method)
+        for method in self.methods:
+            if method in kwargs:
+                self.method = method
+
+        if not self.method:
+            raise ValueError('Unknown method')
 
         if self.method == 'scale':
             try:
-                self.value = float(value)
+                self.value = float(kwargs[self.method])
             except Exception, e:
                 raise ValueError('Wrong value type: %s' % unicode(e))
         else:
             try:
-                self.value = int(value)
+                self.value = int(kwargs[self.method])
             except Exception, e:
                 raise ValueError('Wrong value type: %s' % unicode(e))
 
@@ -53,7 +54,7 @@ class RelativeResizeFilter(ImagineFilterInterface):
         original_width, original_height = resource.size
 
         target_height = self.value
-        target_width = (target_height / original_height) * original_width
+        target_width = int((float(target_height) / original_height) * original_width)
 
         resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
 
@@ -68,7 +69,7 @@ class RelativeResizeFilter(ImagineFilterInterface):
         original_width, original_height = resource.size
 
         target_width = self.value
-        target_height = (target_width / original_width) * original_height
+        target_height = int((float(target_width) / original_width) * original_height)
 
         resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
 
@@ -88,6 +89,24 @@ class RelativeResizeFilter(ImagineFilterInterface):
         resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
 
         return resource
+
+    def _decrease(self, resource):
+        """
+        Decrease image size
+        :param resource:
+        :return:
+        """
+        original_width, original_height = resource.size
+
+        if original_width > self.value and original_height > self.value:
+            target_width = original_width - self.value
+            target_height = original_height - self.value
+
+            resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
+
+            return resource
+        else:
+            raise ValueError('Image dimensions less than or equal to filter value.')
 
     def _scale(self, resource):
         """

@@ -16,6 +16,15 @@ class Imagine(object):
     """
     Flask Imagine extension
     """
+    adapters = {
+        'fs': ImagineFilesystemAdapter
+    }
+    filters = {
+        'autorotate': AutorotateFilter,
+        'relative_resize': RelativeResizeFilter,
+        'thumbnail': ThumbnailFilter
+    }
+
     filter_sets = {}
     adapter = None
 
@@ -38,6 +47,11 @@ class Imagine(object):
 
         self._set_defaults(app)
 
+        if isinstance(app.config['IMAGINE_ADAPTERS'], dict):
+            self.filters.update(app.config['IMAGINE_ADAPTERS'])
+        if isinstance(app.config['IMAGINE_FILTERS'], dict):
+            self.filters.update(app.config['IMAGINE_FILTERS'])
+
         self._handle_adapter(app)
         self._handle_filter_sets(app)
 
@@ -56,14 +70,8 @@ class Imagine(object):
         app.config.setdefault('IMAGINE_THUMBS_PATH', 'cache/')
         app.config.setdefault('IMAGINE_CACHE_ENABLED', True)
 
-        app.config.setdefault('IMAGINE_ADAPTERS', {
-            'fs': ImagineFilesystemAdapter,
-        })
-        app.config.setdefault('IMAGINE_FILTERS', {
-            'autorotate': AutorotateFilter,
-            'relative_resize': RelativeResizeFilter,
-            'thumbnail': ThumbnailFilter
-        })
+        app.config.setdefault('IMAGINE_ADAPTERS', {})
+        app.config.setdefault('IMAGINE_FILTERS', {})
 
         app.config.setdefault('IMAGINE_ADAPTER', {
             'name': 'fs',
@@ -83,12 +91,12 @@ class Imagine(object):
         """
         if 'IMAGINE_ADAPTER' in app.config \
                 and 'name' in app.config['IMAGINE_ADAPTER'] \
-                and app.config['IMAGINE_ADAPTER']['name'] in app.config['IMAGINE_ADAPTERS'].keys():
-            self.adapter = app.config['IMAGINE_ADAPTERS'][app.config['IMAGINE_ADAPTER']['name']](
+                and app.config['IMAGINE_ADAPTER']['name'] in self.adapters.keys():
+            self.adapter = self.adapters[app.config['IMAGINE_ADAPTER']['name']](
                 **app.config['IMAGINE_ADAPTER']
             )
         else:
-            raise ValueError('Unknown adapter type')
+            raise ValueError('Unknown adapter: %s' % unicode(app.config['IMAGINE_ADAPTER']))
 
     def _handle_filter_sets(self, app):
         """
@@ -101,8 +109,8 @@ class Imagine(object):
                 filter_set = []
                 if isinstance(filters_settings, dict) and 'filters' in filters_settings:
                     for filter_type, filter_settings in filters_settings['filters'].iteritems():
-                        if filter_type in app.config['IMAGINE_FILTERS']:
-                            filter_item = app.config['IMAGINE_FILTERS'][filter_type](**filter_settings)
+                        if filter_type in self.filters:
+                            filter_item = self.filters[filter_type](**filter_settings)
                             if isinstance(filter_item, ImagineFilterInterface):
                                 filter_set.append(filter_item)
                             else:
@@ -150,7 +158,7 @@ class Imagine(object):
             ctx = {
                 'imagine_filter': imagine_filter
             }
-            app.context_processor(lambda: ctx)
+            app.context_processor(lambda: ctx)  # pragma: no cover
 
         return app
 
@@ -188,7 +196,7 @@ class Imagine(object):
             abort(404)
 
 
-def imagine_filter(path, filter_name):
+def imagine_filter(path, filter_name):  # pragma: no cover
     """
     Template filter
     :param path: image path

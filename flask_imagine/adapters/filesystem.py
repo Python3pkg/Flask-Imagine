@@ -72,7 +72,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
 
             if os.path.isfile(item_path):
                 return '/%s/%s/%s' % (self.source_folder, self.cache_folder, path.strip('/'))
-            else:
+            else:  # pragma: no cover
                 LOGGER.warning('File is not created on path: %s' % item_path)
                 return False
         else:
@@ -94,7 +94,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         if os.path.isfile(item_path):
             try:
                 return Image.open(item_path)
-            except IOError, e:
+            except IOError, e:  # pragma: no cover
                 LOGGER.warning('Cached file not found on path "%s" with error: %s' % (item_path, unicode(e)))
                 return False
         else:
