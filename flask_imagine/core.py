@@ -22,7 +22,8 @@ class Imagine(object):
     filters = {
         'autorotate': AutorotateFilter,
         'relative_resize': RelativeResizeFilter,
-        'thumbnail': ThumbnailFilter
+        'thumbnail': ThumbnailFilter,
+        'upscale': UpscaleFilter
     }
 
     filter_sets = {}
@@ -41,7 +42,7 @@ class Imagine(object):
         :param app: Flask application
         :return:
         """
-        if not hasattr(app, 'extensions'):
+        if not hasattr(app, 'extensions'):  # pragma: no cover
             app.extensions = {}
         app.extensions['imagine'] = self
 
@@ -154,11 +155,11 @@ class Imagine(object):
         """
         if hasattr(app, 'add_template_filter'):
             app.add_template_filter(imagine_filter, 'imagine_filter')
-        else:
+        else:  # pragma: no cover
             ctx = {
                 'imagine_filter': imagine_filter
             }
-            app.context_processor(lambda: ctx)  # pragma: no cover
+            app.context_processor(lambda: ctx)
 
         return app
 
