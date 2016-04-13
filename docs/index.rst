@@ -8,6 +8,8 @@ Welcome to Flask-Imagine's documentation!
 
 Extension which provides easy image manipulation support in Flask applications.
 
+This extension allows to alter images in certain ways, such as scaling or rotating them, creating thumbnails, adding watermarks, etc. In order to not hurt application performance, altered images can be cached.
+
 .. image:: https://img.shields.io/badge/author-Kronas-blue.svg
    :target: https://github.com/kronas
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
@@ -37,3 +39,4 @@ Table of contents
    configuration
    adapters
    filters
+   custom_filters

@@ -1,5 +1,5 @@
-Adapters
-========
+Storage adapters
+================
 
 Filesystem
 ----------
