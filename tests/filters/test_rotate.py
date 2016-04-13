@@ -27,6 +27,16 @@ class TestRotateFilter(unittest.TestCase):
         image_bmp_path = assets_path + '/flask.bmp'
         self.image_bmp = Image.open(image_bmp_path)
 
+    def test_wrong_init_parameters(self):
+        with self.assertRaises(ValueError):
+            RotateFilter(**{})
+
+        with self.assertRaises(ValueError):
+            RotateFilter(**{'angle': 'string'})
+
+        with self.assertRaises(ValueError):
+            RotateFilter(**{'angle': []})
+
     def test_wrong_resource_type(self):
         rotate_filter = RotateFilter(**{'angle': 0})
         with self.assertRaises(ValueError):
