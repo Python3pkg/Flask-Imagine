@@ -26,7 +26,8 @@ class Imagine(object):
         'relative_resize': RelativeResizeFilter,
         'rotate': RotateFilter,
         'thumbnail': ThumbnailFilter,
-        'upscale': UpscaleFilter
+        'upscale': UpscaleFilter,
+        'watermark': WatermarkFilter
     }
 
     filter_sets = {}

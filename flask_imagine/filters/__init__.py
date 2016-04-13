@@ -6,6 +6,7 @@ from .relative_resize import RelativeResizeFilter
 from .rotate import RotateFilter
 from .thumbnail import ThumbnailFilter
 from .upscale import UpscaleFilter
+from .watermark import WatermarkFilter
 
 __all__ = [
     'AutorotateFilter',
@@ -15,5 +16,6 @@ __all__ = [
     'RotateFilter',
     'ThumbnailFilter',
     'UpscaleFilter',
+    'WatermarkFilter',
     'ImagineFilterInterface'
 ]
