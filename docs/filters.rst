@@ -1,13 +1,13 @@
 Filters
 =======
 
-.. _autorotate_filter:
-
 Autorotate
 ----------
 
 Automatically rotate image based on EXIF information
-::
+
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {
@@ -17,11 +17,10 @@ Automatically rotate image based on EXIF information
         }
     }
 
-.. _crop_filter:
-
 Crop
 ----
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {
@@ -31,11 +30,10 @@ Crop
         }
     }
 
-.. _downscale_filter:
-
 Downscale
 ---------
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {
@@ -45,11 +43,10 @@ Downscale
         }
     }
 
-.. _relative_resize_filter:
-
 Relative resize
 ---------------
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'my_heighten': {
@@ -79,11 +76,10 @@ Relative resize
         }
     }
 
-.. _rotate_filter:
-
 Rotate
 ------
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {
@@ -93,11 +89,10 @@ Rotate
         }
     }
 
-.. _thumbnail_filter:
-
 Thumbnail
 ---------
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'thumb_in': {
@@ -112,11 +107,10 @@ Thumbnail
         }
     }
 
-.. _upscale_filter:
-
 Upscale
 -------
-::
+.. code-block:: python
+   :linenos:
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {

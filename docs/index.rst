@@ -8,52 +8,32 @@ Welcome to Flask-Imagine's documentation!
 
 Extension which provides easy image manipulation support in Flask applications.
 
-Installation
-^^^^^^^^^^^^
-::
+.. image:: https://img.shields.io/badge/author-Kronas-blue.svg
+   :target: https://github.com/kronas
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+   :target: https://raw.githubusercontent.com/kronas/Flask-Imagine/master/LICENSE
+.. image:: https://img.shields.io/badge/pypi-0.2.2-red.svg
+   :target: https://pypi.python.org/pypi/Flask-Imagine
+.. image:: https://travis-ci.org/FlaskGuys/Flask-Imagine.svg?branch=master
+   :target: https://travis-ci.org/FlaskGuys/Flask-Imagine
+.. image:: https://www.versioneye.com/user/projects/570503e8fcd19a0039f15cc1/badge.svg
+   :target: https://www.versioneye.com/user/projects/
+.. image:: https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/badges/quality-score.png?b=master
+   :target: https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/?branch=master
+.. image:: https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/badges/build.png?b=master
+   :target: https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/build-status/master
+.. image:: https://landscape.io/github/FlaskGuys/Flask-Imagine/master/landscape.svg
+   :target: https://landscape.io/github/FlaskGuys/Flask-Imagine/master
+.. image:: https://codecov.io/github/FlaskGuys/Flask-Imagine/coverage.svg?branch=master
+   :target: https://codecov.io/github/FlaskGuys/Flask-Imagine?branch=master
 
-    $ pip install Flask-Imagine
+Table of contents
+*****************
 
-Configuration example
-^^^^^^^^^^^^^^^^^^^^^
-::
+.. toctree::
+   :maxdepth: 3
 
-    from flask import Flask
-    from flask.ext.imagine import Imagine
-
-    app = Flask(__name__)
-
-    app.config['IMAGINE_ADAPTER'] = {
-        'name': 'fs',
-        'source_folder': 'static',
-        'cache_folder': 'cache'
-    }
-
-    app.config['IMAGINE_FILTER_SETS'] = {
-        'filter_set_name': {
-            'cache': True,
-            'filters': {
-                # Filters initialisation parameters
-            }
-        }
-    }
-
-Available filters:
-^^^^^^^^^^^^^^^^^^
-
-* :ref:`thumbnail_filter`
-* :ref:`autorotate_filter`
-* :ref:`crop_filter`
-* :ref:`rotate_filter`
-* :ref:`upscale_filter`
-* :ref:`downscale_filter`
-* :ref:`relative_resize_filter`
-
-
-Indices and tables
-==================
-
-* :doc:`filters`
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   getting_started
+   configuration
+   adapters
+   filters
