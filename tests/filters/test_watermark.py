@@ -46,6 +46,12 @@ class TestCropFilter(unittest.TestCase):
         with self.assertRaises(ValueError):
             WatermarkFilter(**{'image': 'watermark.png', 'size': 0.5, 'position': 'center', 'opacity': 'string'})
 
+        with self.assertRaises(ValueError):
+            WatermarkFilter(**{'image': 'watermark.png', 'size': 1.5, 'position': 'center', 'opacity': 'string'})
+
+        with self.assertRaises(ValueError):
+            WatermarkFilter(**{'image': 'watermark.png', 'size': 0.5, 'position': 'center', 'opacity': 1.5})
+
     def test_wrong_watermark_path(self):
         watermark_filter = WatermarkFilter(**{
             'image': 'file.png',
