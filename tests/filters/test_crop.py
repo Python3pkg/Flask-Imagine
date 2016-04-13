@@ -65,84 +65,76 @@ class TestCropFilter(unittest.TestCase):
 
     def test_success_horizontal_with_start_from_zero(self):
         crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
+
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
         self.assertTupleEqual((800, 500), image_png.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
         image_jpg = copy(self.image_jpg)
         image_jpg = crop.apply(image_jpg)
         self.assertTupleEqual((800, 500), image_jpg.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
         image_tif = copy(self.image_tif)
         image_tif = crop.apply(image_tif)
         self.assertTupleEqual((800, 500), image_tif.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
         image_bmp = copy(self.image_bmp)
         image_bmp = crop.apply(image_bmp)
         self.assertTupleEqual((800, 500), image_bmp.size)
 
     def test_success_horizontal_with_start_from_point(self):
         crop = CropFilter(**{'start': [100, 100], 'size': [800, 600]})
+
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
         self.assertTupleEqual((800, 400), image_png.size)
 
-        crop = CropFilter(**{'start': [100, 100], 'size': [800, 600]})
         image_jpg = copy(self.image_jpg)
         image_jpg = crop.apply(image_jpg)
         self.assertTupleEqual((800, 400), image_jpg.size)
 
-        crop = CropFilter(**{'start': [100, 100], 'size': [800, 600]})
         image_tif = copy(self.image_tif)
         image_tif = crop.apply(image_tif)
         self.assertTupleEqual((800, 400), image_tif.size)
 
-        crop = CropFilter(**{'start': [100, 100], 'size': [800, 600]})
         image_bmp = copy(self.image_bmp)
         image_bmp = crop.apply(image_bmp)
         self.assertTupleEqual((800, 400), image_bmp.size)
 
     def test_success_with_oversize(self):
         crop = CropFilter(**{'start': [0, 0], 'size': [1500, 1000]})
+
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [1500, 1000]})
         image_jpg = copy(self.image_jpg)
         image_jpg = crop.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [1500, 1000]})
         image_tif = copy(self.image_tif)
         image_tif = crop.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
-        crop = CropFilter(**{'start': [0, 0], 'size': [1500, 1000]})
         image_bmp = copy(self.image_bmp)
         image_bmp = crop.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_error_with_out_of_range(self):
         crop = CropFilter(**{'start': [1000, 1000], 'size': [1500, 1000]})
+
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
-        crop = CropFilter(**{'start': [1000, 1000], 'size': [1500, 1000]})
         image_jpg = copy(self.image_jpg)
         image_jpg = crop.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
-        crop = CropFilter(**{'start': [1000, 1000], 'size': [1500, 1000]})
         image_tif = copy(self.image_tif)
         image_tif = crop.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
-        crop = CropFilter(**{'start': [1000, 1000], 'size': [1500, 1000]})
         image_bmp = copy(self.image_bmp)
         image_bmp = crop.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)

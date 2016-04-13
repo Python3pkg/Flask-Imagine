@@ -3,6 +3,7 @@ from .crop import CropFilter
 from .downscale import DownscaleFilter
 from .interface import ImagineFilterInterface
 from .relative_resize import RelativeResizeFilter
+from .rotate import RotateFilter
 from .thumbnail import ThumbnailFilter
 from .upscale import UpscaleFilter
 
@@ -11,6 +12,7 @@ __all__ = [
     'CropFilter',
     'DownscaleFilter',
     'RelativeResizeFilter',
+    'RotateFilter',
     'ThumbnailFilter',
     'UpscaleFilter',
     'ImagineFilterInterface'

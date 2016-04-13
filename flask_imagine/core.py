@@ -24,6 +24,7 @@ class Imagine(object):
         'crop': CropFilter,
         'downscale': DownscaleFilter,
         'relative_resize': RelativeResizeFilter,
+        'rotate': RotateFilter,
         'thumbnail': ThumbnailFilter,
         'upscale': UpscaleFilter
     }
