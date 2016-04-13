@@ -21,6 +21,7 @@ class Imagine(object):
     }
     filters = {
         'autorotate': AutorotateFilter,
+        'crop': CropFilter,
         'downscale': DownscaleFilter,
         'relative_resize': RelativeResizeFilter,
         'thumbnail': ThumbnailFilter,
@@ -116,10 +117,10 @@ class Imagine(object):
                             raise ValueError('Unknown filter type: %s' % filter_type)
 
                     filter_config = {'filters': filter_set}
-                    if 'cached' in filters_settings and filters_settings['cached']:
-                        filter_config['cached'] = True
-                    else:
+                    if 'cached' in filters_settings and not filters_settings['cached']:
                         filter_config['cached'] = False
+                    else:
+                        filter_config['cached'] = True
 
                     self.filter_sets.update({filter_name: filter_config})
                 else:

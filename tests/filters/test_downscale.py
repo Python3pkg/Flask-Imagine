@@ -44,48 +44,48 @@ class TestDownscaleFilter(unittest.TestCase):
             DownscaleFilter(**{'max': [1, 2, 3]})
 
     def test_wrong_resource_type(self):
-        upscale = DownscaleFilter(**{'max': [800, 600]})
+        downscale = DownscaleFilter(**{'max': [800, 600]})
         with self.assertRaises(ValueError):
-            upscale.apply('string')
+            downscale.apply('string')
 
     def test_small_image(self):
-        upscale = DownscaleFilter(**{'max': [1920, 1080]})
+        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_png = copy(self.image_png)
-        image_png = upscale.apply(image_png)
+        image_png = downscale.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
-        upscale = DownscaleFilter(**{'max': [1920, 1080]})
+        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_jpg = copy(self.image_jpg)
-        image_jpg = upscale.apply(image_jpg)
+        image_jpg = downscale.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
-        upscale = DownscaleFilter(**{'max': [1920, 1080]})
+        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_tif = copy(self.image_tif)
-        image_tif = upscale.apply(image_tif)
+        image_tif = downscale.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
-        upscale = DownscaleFilter(**{'max': [1920, 1080]})
+        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_bmp = copy(self.image_bmp)
-        image_bmp = upscale.apply(image_bmp)
+        image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_big_image(self):
-        upscale = DownscaleFilter(**{'max': [800, 600]})
+        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_png = copy(self.image_png)
-        image_png = upscale.apply(image_png)
+        image_png = downscale.apply(image_png)
         self.assertTupleEqual((800, 400), image_png.size)
 
-        upscale = DownscaleFilter(**{'max': [800, 600]})
+        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_jpg = copy(self.image_jpg)
-        image_jpg = upscale.apply(image_jpg)
+        image_jpg = downscale.apply(image_jpg)
         self.assertTupleEqual((800, 400), image_jpg.size)
 
-        upscale = DownscaleFilter(**{'max': [800, 600]})
+        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_tif = copy(self.image_tif)
-        image_tif = upscale.apply(image_tif)
+        image_tif = downscale.apply(image_tif)
         self.assertTupleEqual((800, 400), image_tif.size)
 
-        upscale = DownscaleFilter(**{'max': [800, 600]})
+        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_bmp = copy(self.image_bmp)
-        image_bmp = upscale.apply(image_bmp)
+        image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((800, 400), image_bmp.size)
