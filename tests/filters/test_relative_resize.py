@@ -56,84 +56,76 @@ class TestRelativeResizeFilter(unittest.TestCase):
 
     def test_heighten(self):
         relative_resize = RelativeResizeFilter(**{'heighten': 50})
+
         image_png = copy(self.image_png)
         image_png = relative_resize.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        relative_resize = RelativeResizeFilter(**{'heighten': 50})
         image_jpg = copy(self.image_jpg)
         image_jpg = relative_resize.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        relative_resize = RelativeResizeFilter(**{'heighten': 50})
         image_tif = copy(self.image_tif)
         image_tif = relative_resize.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        relative_resize = RelativeResizeFilter(**{'heighten': 50})
         image_bmp = copy(self.image_bmp)
         image_bmp = relative_resize.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
     def test_widen(self):
         relative_resize = RelativeResizeFilter(**{'widen': 100})
+
         image_png = copy(self.image_png)
         image_png = relative_resize.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        relative_resize = RelativeResizeFilter(**{'widen': 100})
         image_jpg = copy(self.image_jpg)
         image_jpg = relative_resize.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        relative_resize = RelativeResizeFilter(**{'widen': 100})
         image_tif = copy(self.image_tif)
         image_tif = relative_resize.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        relative_resize = RelativeResizeFilter(**{'widen': 100})
         image_bmp = copy(self.image_bmp)
         image_bmp = relative_resize.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
     def test_increase(self):
         relative_resize = RelativeResizeFilter(**{'increase': 1000})
+
         image_png = copy(self.image_png)
         image_png = relative_resize.apply(image_png)
         self.assertTupleEqual((2000, 1500), image_png.size)
 
-        relative_resize = RelativeResizeFilter(**{'increase': 1000})
         image_jpg = copy(self.image_jpg)
         image_jpg = relative_resize.apply(image_jpg)
         self.assertTupleEqual((2000, 1500), image_jpg.size)
 
-        relative_resize = RelativeResizeFilter(**{'increase': 1000})
         image_tif = copy(self.image_tif)
         image_tif = relative_resize.apply(image_tif)
         self.assertTupleEqual((2000, 1500), image_tif.size)
 
-        relative_resize = RelativeResizeFilter(**{'increase': 1000})
         image_bmp = copy(self.image_bmp)
         image_bmp = relative_resize.apply(image_bmp)
         self.assertTupleEqual((2000, 1500), image_bmp.size)
 
     def test_decrease_success(self):
         relative_resize = RelativeResizeFilter(**{'decrease': 100})
+
         image_png = copy(self.image_png)
         image_png = relative_resize.apply(image_png)
         self.assertTupleEqual((900, 400), image_png.size)
 
-        relative_resize = RelativeResizeFilter(**{'decrease': 100})
         image_jpg = copy(self.image_jpg)
         image_jpg = relative_resize.apply(image_jpg)
         self.assertTupleEqual((900, 400), image_jpg.size)
 
-        relative_resize = RelativeResizeFilter(**{'decrease': 100})
         image_tif = copy(self.image_tif)
         image_tif = relative_resize.apply(image_tif)
         self.assertTupleEqual((900, 400), image_tif.size)
 
-        relative_resize = RelativeResizeFilter(**{'decrease': 100})
         image_bmp = copy(self.image_bmp)
         image_bmp = relative_resize.apply(image_bmp)
         self.assertTupleEqual((900, 400), image_bmp.size)
@@ -147,21 +139,19 @@ class TestRelativeResizeFilter(unittest.TestCase):
 
     def test_scale(self):
         relative_resize = RelativeResizeFilter(**{'scale': 1.5})
+
         image_png = copy(self.image_png)
         image_png = relative_resize.apply(image_png)
         self.assertTupleEqual((1500, 750), image_png.size)
 
-        relative_resize = RelativeResizeFilter(**{'scale': 1.5})
         image_jpg = copy(self.image_jpg)
         image_jpg = relative_resize.apply(image_jpg)
         self.assertTupleEqual((1500, 750), image_jpg.size)
 
-        relative_resize = RelativeResizeFilter(**{'scale': 1.5})
         image_tif = copy(self.image_tif)
         image_tif = relative_resize.apply(image_tif)
         self.assertTupleEqual((1500, 750), image_tif.size)
 
-        relative_resize = RelativeResizeFilter(**{'scale': 1.5})
         image_bmp = copy(self.image_bmp)
         image_bmp = relative_resize.apply(image_bmp)
         self.assertTupleEqual((1500, 750), image_bmp.size)

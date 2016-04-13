@@ -50,42 +50,38 @@ class TestUpscaleFilter(unittest.TestCase):
 
     def test_small_image(self):
         upscale = UpscaleFilter(**{'min': [1920, 1080]})
+
         image_png = copy(self.image_png)
         image_png = upscale.apply(image_png)
         self.assertTupleEqual((1920, 960), image_png.size)
 
-        upscale = UpscaleFilter(**{'min': [1920, 1080]})
         image_jpg = copy(self.image_jpg)
         image_jpg = upscale.apply(image_jpg)
         self.assertTupleEqual((1920, 960), image_jpg.size)
 
-        upscale = UpscaleFilter(**{'min': [1920, 1080]})
         image_tif = copy(self.image_tif)
         image_tif = upscale.apply(image_tif)
         self.assertTupleEqual((1920, 960), image_tif.size)
 
-        upscale = UpscaleFilter(**{'min': [1920, 1080]})
         image_bmp = copy(self.image_bmp)
         image_bmp = upscale.apply(image_bmp)
         self.assertTupleEqual((1920, 960), image_bmp.size)
 
     def test_big_image(self):
         upscale = UpscaleFilter(**{'min': [800, 600]})
+
         image_png = copy(self.image_png)
         image_png = upscale.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
-        upscale = UpscaleFilter(**{'min': [800, 600]})
         image_jpg = copy(self.image_jpg)
         image_jpg = upscale.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
-        upscale = UpscaleFilter(**{'min': [800, 600]})
         image_tif = copy(self.image_tif)
         image_tif = upscale.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
-        upscale = UpscaleFilter(**{'min': [800, 600]})
         image_bmp = copy(self.image_bmp)
         image_bmp = upscale.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)

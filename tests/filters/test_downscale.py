@@ -50,42 +50,38 @@ class TestDownscaleFilter(unittest.TestCase):
 
     def test_small_image(self):
         downscale = DownscaleFilter(**{'max': [1920, 1080]})
+
         image_png = copy(self.image_png)
         image_png = downscale.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
-        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_jpg = copy(self.image_jpg)
         image_jpg = downscale.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
-        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_tif = copy(self.image_tif)
         image_tif = downscale.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
-        downscale = DownscaleFilter(**{'max': [1920, 1080]})
         image_bmp = copy(self.image_bmp)
         image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_big_image(self):
         downscale = DownscaleFilter(**{'max': [800, 600]})
+
         image_png = copy(self.image_png)
         image_png = downscale.apply(image_png)
         self.assertTupleEqual((800, 400), image_png.size)
 
-        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_jpg = copy(self.image_jpg)
         image_jpg = downscale.apply(image_jpg)
         self.assertTupleEqual((800, 400), image_jpg.size)
 
-        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_tif = copy(self.image_tif)
         image_tif = downscale.apply(image_tif)
         self.assertTupleEqual((800, 400), image_tif.size)
 
-        downscale = DownscaleFilter(**{'max': [800, 600]})
         image_bmp = copy(self.image_bmp)
         image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((800, 400), image_bmp.size)
