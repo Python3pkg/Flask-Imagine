@@ -25,7 +25,7 @@ class WatermarkFilter(ImagineFilterInterface):
         :param kwargs: dict
         """
         if 'image' in kwargs:
-            self.image_path = os.path.normpath(kwargs['image'])
+            self.image_path = os.path.normpath(str(kwargs['image']))
         else:
             raise ValueError('Watermark image path doesn\'t set.')
 
@@ -44,7 +44,7 @@ class WatermarkFilter(ImagineFilterInterface):
             else:
                 raise ValueError('Unsupported watermark position: %s' % kwargs.get('position'))
         else:
-            raise ValueError('Watermark size doesn\'t set.')
+            raise ValueError('Watermark position doesn\'t set.')
 
         if 'opacity' in kwargs:
             try:
@@ -64,7 +64,7 @@ class WatermarkFilter(ImagineFilterInterface):
         if not isinstance(resource, Image.Image):
             raise ValueError('Unknown resource format')
 
-        if resource.mode != 'RGBA':
+        if resource.mode != 'RGBA':  # pragma: no cover
             resource = resource.convert('RGBA')
 
         layer = Image.new('RGBA', resource.size, (0, 0, 0, 0))
@@ -73,7 +73,7 @@ class WatermarkFilter(ImagineFilterInterface):
 
         return Image.composite(layer, resource, layer)
 
-    def _top_left_position(self, layer, resource):
+    def _top_left_position(self, resource):
         """
         Place watermark to top left position
         :param layer: Image.Image
@@ -84,7 +84,7 @@ class WatermarkFilter(ImagineFilterInterface):
 
         return image, 0, 0
 
-    def _top_position(self, layer, resource):
+    def _top_position(self, resource):
         """
         Place watermark to top position
         :param layer: Image.Image
@@ -93,12 +93,12 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] / 2 - image.size[0] / 2)
+        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
         upper = 0
 
         return image, left, upper
 
-    def _top_right_position(self, layer, resource):
+    def _top_right_position(self, resource):
         """
         Place watermark to top right position
         :param layer: Image.Image
@@ -107,12 +107,12 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] - image.size[0])
+        left = int(round(resource.size[0] - image.size[0]))
         upper = 0
 
         return image, left, upper
 
-    def _left_position(self, layer, resource):
+    def _left_position(self, resource):
         """
         Place watermark to left position
         :param layer: Image.Image
@@ -122,11 +122,11 @@ class WatermarkFilter(ImagineFilterInterface):
         image = self._get_scaled_image(resource)
 
         left = 0
-        upper = int(resource.size[1] / 2 - image.size[1] / 2)
+        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
 
         return image, left, upper
 
-    def _center_position(self, layer, resource):
+    def _center_position(self, resource):
         """
         Place watermark to center position
         :param layer: Image.Image
@@ -135,12 +135,12 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] / 2 - image.size[0] / 2)
-        upper = int(resource.size[1] / 2 - image.size[1] / 2)
+        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
+        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
 
         return image, left, upper
 
-    def _right_position(self, layer, resource):
+    def _right_position(self, resource):
         """
         Place watermark to right position
         :param layer: Image.Image
@@ -149,12 +149,12 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] - image.size[0])
-        upper = int(resource.size[1] / 2 - image.size[1] / 2)
+        left = int(round(resource.size[0] - image.size[0]))
+        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
 
         return image, left, upper
 
-    def _bottom_left_position(self, layer, resource):
+    def _bottom_left_position(self, resource):
         """
         Place watermark to bottom left position
         :param layer: Image.Image
@@ -164,11 +164,11 @@ class WatermarkFilter(ImagineFilterInterface):
         image = self._get_scaled_image(resource)
 
         left = 0
-        upper = int(resource.size[1] - image.size[1])
+        upper = int(round(resource.size[1] - image.size[1]))
 
         return image, left, upper
 
-    def _bottom_position(self, layer, resource):
+    def _bottom_position(self, resource):
         """
         Place watermark to bottom position
         :param layer: Image.Image
@@ -177,12 +177,12 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] / 2 - image.size[0] / 2)
-        upper = int(resource.size[1] - image.size[1])
+        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
+        upper = int(round(resource.size[1] - image.size[1]))
 
         return image, left, upper
 
-    def _bottom_right_position(self, layer, resource):
+    def _bottom_right_position(self, resource):
         """
         Place watermark to bottom right position
         :param layer: Image.Image
@@ -191,8 +191,8 @@ class WatermarkFilter(ImagineFilterInterface):
         """
         image = self._get_scaled_image(resource)
 
-        left = int(resource.size[0] - image.size[0])
-        upper = int(resource.size[1] - image.size[1])
+        left = int(round(resource.size[0] - image.size[0]))
+        upper = int(round(resource.size[1] - image.size[1]))
 
         return image, left, upper
 
