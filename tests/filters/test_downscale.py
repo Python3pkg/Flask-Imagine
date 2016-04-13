@@ -10,6 +10,7 @@ class TestDownscaleFilter(unittest.TestCase):
     image_jpg = None
     image_tif = None
     image_bmp = None
+    image_vertical = None
 
     def setUp(self):
         assets_path = os.path.abspath(os.path.dirname(__file__)) + '/../static/'
@@ -26,6 +27,9 @@ class TestDownscaleFilter(unittest.TestCase):
 
         image_bmp_path = assets_path + '/flask.bmp'
         self.image_bmp = Image.open(image_bmp_path)
+
+        image_vertical_path = assets_path + '/flask_vertical.jpg'
+        self.image_vertical = Image.open(image_vertical_path)
 
     def test_wrong_init_parameters(self):
         with self.assertRaises(ValueError):
@@ -67,6 +71,10 @@ class TestDownscaleFilter(unittest.TestCase):
         image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
+        image_vertical = copy(self.image_vertical)
+        image_vertical = downscale.apply(image_vertical)
+        self.assertTupleEqual((500, 1000), image_vertical.size)
+
     def test_big_image(self):
         downscale = DownscaleFilter(**{'max': [800, 600]})
 
@@ -85,3 +93,7 @@ class TestDownscaleFilter(unittest.TestCase):
         image_bmp = copy(self.image_bmp)
         image_bmp = downscale.apply(image_bmp)
         self.assertTupleEqual((800, 400), image_bmp.size)
+
+        image_vertical = copy(self.image_vertical)
+        image_vertical = downscale.apply(image_vertical)
+        self.assertTupleEqual((300, 600), image_vertical.size)
