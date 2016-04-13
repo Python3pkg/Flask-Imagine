@@ -13,3 +13,33 @@ Flask-Imagine
 [![Documentation Status](https://readthedocs.org/projects/flask-imagine/badge/?version=latest)](http://flask-imagine.readthedocs.org/en/latest/?badge=latest)
 
 Extension which provides easy image manipulation support in Flask applications.
+
+Installation
+------
+```
+$ pip install Flask-Imagine
+```
+
+Configuration example
+------
+```
+from flask import Flask
+from flask.ext.imagine import Imagine
+
+app = Flask(__name__)
+
+app.config['IMAGINE_ADAPTER'] = {
+    'name': 'fs',
+    'source_folder': 'static',
+    'cache_folder': 'cache'
+}
+
+app.config['IMAGINE_FILTER_SETS'] = {
+    'filter_set_name': {
+        'cache': True,
+        'filters': {
+            # Filters initialization parameters
+        }
+    }
+}
+```
