@@ -13,8 +13,6 @@ Configuration guide
 
     app.config['IMAGINE_NAME'] = 'imagine'
 
-    app.config['IMAGINE_THUMBS_PATH'] = 'cache/'
-
     app.config['IMAGINE_CACHE_ENABLED'] = True
 
     app.config['IMAGINE_ADAPTERS'] = {
@@ -39,7 +37,7 @@ Configuration guide
 
     app.config['IMAGINE_FILTER_SETS'] = {
         'filter_set_name': {
-            'cache': True,
+            'cache': False,
             'filters': {
                 # Filters initialization parameters
             }

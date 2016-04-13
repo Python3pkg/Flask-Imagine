@@ -3,7 +3,7 @@ Flask Imagine extension.
 """
 import logging
 
-from flask import abort, redirect
+from flask import current_app, abort, redirect
 
 from .adapters import ImagineFilesystemAdapter
 from .filters import *
@@ -69,7 +69,6 @@ class Imagine(object):
         """
         app.config.setdefault('IMAGINE_URL', '/media/cache/resolve')
         app.config.setdefault('IMAGINE_NAME', 'imagine')
-        app.config.setdefault('IMAGINE_THUMBS_PATH', 'cache/')
         app.config.setdefault('IMAGINE_CACHE_ENABLED', True)
 
         app.config.setdefault('IMAGINE_ADAPTERS', {})
@@ -77,8 +76,8 @@ class Imagine(object):
 
         app.config.setdefault('IMAGINE_ADAPTER', {
             'name': 'fs',
-            'source_folder': '/static/',
-            'cache_folder': '/cache/'
+            'source_folder': 'static',
+            'cache_folder': 'cache'
         })
 
         app.config.setdefault('IMAGINE_FILTER_SETS', {})
@@ -119,10 +118,10 @@ class Imagine(object):
                             raise ValueError('Unknown filter type: %s' % filter_type)
 
                     filter_config = {'filters': filter_set}
-                    if 'cached' in filters_settings and not filters_settings['cached']:
-                        filter_config['cached'] = False
+                    if 'cached' in filters_settings:
+                        filter_config['cached'] = filters_settings['cached']
                     else:
-                        filter_config['cached'] = True
+                        filter_config['cached'] = app.config['IMAGINE_CACHE_ENABLED']
 
                     self.filter_sets.update({filter_name: filter_config})
                 else:
@@ -176,3 +175,21 @@ class Imagine(object):
         else:
             LOGGER.warning('Filter "%s" not found.' % filter_name)
             abort(404)
+
+    def clear_cache(self, path, filter_name=None):
+        if filter_name:
+            self.adapter.remove_cached_item('%s/%s' % (filter_name, path))
+        else:
+            for filter_name in self.filter_sets.iterkeys():
+                self.adapter.remove_cached_item('%s/%s' % (filter_name, path))
+
+
+def imagine_cache_clear(path, filter_name=None):
+    """
+    Clear cache for resource path.
+    :param path: str
+    :param filter_name: str or None
+    """
+    self = current_app.extensions['imagine']
+    self.clear_cache(path, filter_name)
+
