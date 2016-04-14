@@ -177,6 +177,11 @@ class Imagine(object):
             abort(404)
 
     def clear_cache(self, path, filter_name=None):
+        """
+        Clear cache for resource path.
+        :param path: str
+        :param filter_name: str or None
+        """
         if filter_name:
             self.adapter.remove_cached_item('%s/%s' % (filter_name, path))
         else:
