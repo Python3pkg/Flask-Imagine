@@ -11,7 +11,7 @@ class ImagineAdapterInterface(object):
         """
         Get resource item
         :param path: string
-        :return: Image
+        :return: PIL.Image
         """
         raise NotImplementedError()
 
@@ -20,7 +20,7 @@ class ImagineAdapterInterface(object):
         Create cached resource item
         :param path: string
         :param content: Image
-        :return:
+        :return: str
         """
         raise NotImplementedError()
 
@@ -28,7 +28,7 @@ class ImagineAdapterInterface(object):
         """
         Get cached resource item
         :param path: string
-        :return:
+        :return: PIL.Image
         """
         raise NotImplementedError()
 
@@ -36,7 +36,7 @@ class ImagineAdapterInterface(object):
         """
         Check for cached resource item exists
         :param path: string
-        :return:
+        :return: bool
         """
         raise NotImplementedError()
 
@@ -44,6 +44,6 @@ class ImagineAdapterInterface(object):
         """
         Remove cached resource item
         :param path: string
-        :return:
+        :return: bool
         """
         raise NotImplementedError()

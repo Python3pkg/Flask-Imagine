@@ -31,7 +31,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         """
         Get resource item
         :param path: string
-        :return: Image
+        :return: PIL.Image
         """
         if self.source_folder:
             item_path = '%s/%s/%s' % (
@@ -60,9 +60,9 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
     def create_cached_item(self, path, content):
         """
         Create cached resource item
-        :param path: string
+        :param path: str
         :param content: Image
-        :return:
+        :return: str
         """
         if isinstance(content, Image.Image):
             item_path = '%s/%s/%s' % (
@@ -85,8 +85,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
     def get_cached_item(self, path):
         """
         Get cached resource item
-        :param path: string
-        :return:
+        :param path: str
+        :return: PIL.Image
         """
         item_path = '%s/%s/%s' % (
                 current_app.static_folder,
@@ -106,8 +106,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
     def check_cached_item(self, path):
         """
         Check for cached resource item exists
-        :param path: string
-        :return:
+        :param path: str
+        :return: bool
         """
         item_path = '%s/%s/%s' % (
                 current_app.static_folder,
@@ -123,8 +123,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
     def remove_cached_item(self, path):
         """
         Remove cached resource item
-        :param path: string
-        :return:
+        :param path: str
+        :return: bool
         """
         item_path = '%s/%s/%s' % (
                 current_app.static_folder,

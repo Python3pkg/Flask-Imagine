@@ -11,7 +11,7 @@ The Flask-Imagine allows you to load your own custom filter classes. The only re
     class MyCustomFilter(ImagineFilterInterface):
         configuration_parameter = None
 
-        def __init__(self, configuration_parameter):
+        def __init__(self, configuration_parameter, **kwargs):
             self.configuration_parameter = configuration_parameter
 
         def apply(self, resource):
