@@ -14,7 +14,7 @@ This extension allows to alter images in certain ways, such as scaling or rotati
    :target: https://github.com/kronas
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: https://raw.githubusercontent.com/kronas/Flask-Imagine/master/LICENSE
-.. image:: https://img.shields.io/badge/pypi-0.3-red.svg
+.. image:: https://img.shields.io/badge/pypi-0.3.1-red.svg
    :target: https://pypi.python.org/pypi/Flask-Imagine
 .. image:: https://travis-ci.org/FlaskGuys/Flask-Imagine.svg?branch=master
    :target: https://travis-ci.org/FlaskGuys/Flask-Imagine

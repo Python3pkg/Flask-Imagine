@@ -51,7 +51,7 @@ class Imagine(object):
         self._set_defaults(app)
 
         if isinstance(app.config['IMAGINE_ADAPTERS'], dict):
-            self.filters.update(app.config['IMAGINE_ADAPTERS'])
+            self.adapters.update(app.config['IMAGINE_ADAPTERS'])
         if isinstance(app.config['IMAGINE_FILTERS'], dict):
             self.filters.update(app.config['IMAGINE_FILTERS'])
 
