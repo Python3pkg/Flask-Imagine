@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Imagine',
-    version='0.3.1',
+    version='0.4',
     description='Extension which provides easy image manipulation support in Flask applications.',
     url='https://github.com/FlaskGuys/Flask-Imagine',
 

@@ -3,7 +3,7 @@ Flask-Imagine
 
 [![Author](https://img.shields.io/badge/author-Kronas-blue.svg)](https://github.com/kronas)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/kronas/Flask-Imagine/master/LICENSE)
-[![PyPi](https://img.shields.io/badge/pypi-0.3.1-red.svg)](https://pypi.python.org/pypi/Flask-Imagine)
+[![PyPi](https://img.shields.io/badge/pypi-0.4-red.svg)](https://pypi.python.org/pypi/Flask-Imagine)
 [![Build Status](https://travis-ci.org/FlaskGuys/Flask-Imagine.svg?branch=master)](https://travis-ci.org/FlaskGuys/Flask-Imagine)
 [![Dependency Status](https://www.versioneye.com/user/projects/570503e8fcd19a0039f15cc1/badge.svg)](https://www.versioneye.com/user/projects/570503e8fcd19a0039f15cc1)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FlaskGuys/Flask-Imagine/?branch=master)
@@ -30,16 +30,24 @@ app = Flask(__name__)
 
 app.config['IMAGINE_ADAPTER'] = {
     'name': 'fs',
-    'source_folder': 'static',
-    'cache_folder': 'cache'
+    'source_folder': 'images',  #  Relative to 'static' folder
+    'cache_folder': 'cache'     #  Not required. Default: 'cache'
 }
 
 app.config['IMAGINE_FILTER_SETS'] = {
     'filter_set_name': {
         'cache': True,
         'filters': {
-            # Filters initialization parameters
+            #  Filters initialization parameters
         }
     }
 }
+
+# ... Another configuration options
+
+# Init extension
+imagine = Imagine(app)
+#  or 
+imagine = Imagine()
+imagine.init_app(app)
 ```

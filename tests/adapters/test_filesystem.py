@@ -55,11 +55,11 @@ class TestSuccessImagineFilesystemAdapter(TestCase):
 
         app.config['IMAGINE_ADAPTER'] = {
             'name': 'fs',
-            'cache_folder': '/cache/'
+            'cache_folder': 'cache'
         }
 
-        with self.assertRaises(ValueError):
-            Imagine(app)
+        imagine = Imagine(app)
+        self.assertTrue(isinstance(imagine, Imagine))
 
     def test_init_without_cache_folder(self):
         app = Flask(__name__)
@@ -70,7 +70,7 @@ class TestSuccessImagineFilesystemAdapter(TestCase):
 
         app.config['IMAGINE_ADAPTER'] = {
             'name': 'fs',
-            'source_folder': '/static/'
+            'source_folder': 'images'
         }
 
         imagine = Imagine(app)

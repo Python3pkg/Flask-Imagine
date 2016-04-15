@@ -29,6 +29,8 @@ class RotateFilter(ImagineFilterInterface):
         if not isinstance(resource, Image.Image):
             raise ValueError('Unknown resource format')
 
+        resource_format = resource.format
         resource = resource.rotate(self.angle, expand=True)
+        resource.format = resource_format
 
         return resource

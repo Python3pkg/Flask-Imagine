@@ -24,12 +24,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param kwargs: parameters
         :return:
         """
-        if 'source_folder' in kwargs:
-            self.source_folder = kwargs.pop('source_folder').strip('/')
-        else:
-            raise ValueError('Source folder does not set.')
-
-        self.cache_folder = kwargs.pop('cache_folder', 'cache').strip('/')
+        self.source_folder = kwargs.get('source_folder', '').strip('/')
+        self.cache_folder = kwargs.get('cache_folder', 'cache').strip('/')
 
     def get_item(self, path):
         """
@@ -37,11 +33,20 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return: Image
         """
-        item_path = '%s/%s/%s' % (
-                current_app.root_path,
-                self.source_folder,
-                path.strip('/')
-            )
+        if self.source_folder:
+            item_path = '%s/%s/%s' % (
+                    current_app.static_folder,
+                    self.source_folder,
+                    path.strip('/')
+                )
+        else:
+
+            item_path = '%s/%s' % (
+                    current_app.static_folder,
+                    path.strip('/')
+                )
+
+        print item_path
 
         if os.path.isfile(item_path):
             try:
@@ -60,9 +65,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :return:
         """
         if isinstance(content, Image.Image):
-            item_path = '%s/%s/%s/%s' % (
-                current_app.root_path,
-                self.source_folder,
+            item_path = '%s/%s/%s' % (
+                current_app.static_folder,
                 self.cache_folder,
                 path.strip('/')
             )
@@ -71,7 +75,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
             content.save(item_path)
 
             if os.path.isfile(item_path):
-                return '/%s/%s/%s' % (self.source_folder, self.cache_folder, path.strip('/'))
+                return '%s/%s/%s' % (current_app.static_url_path, self.cache_folder, path.strip('/'))
             else:  # pragma: no cover
                 LOGGER.warning('File is not created on path: %s' % item_path)
                 return False
@@ -84,9 +88,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return:
         """
-        item_path = '%s/%s/%s/%s' % (
-                current_app.root_path,
-                self.source_folder,
+        item_path = '%s/%s/%s' % (
+                current_app.static_folder,
                 self.cache_folder,
                 path.strip('/')
             )
@@ -106,14 +109,16 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return:
         """
-        item_path = '%s/%s/%s/%s' % (
-                current_app.root_path,
-                self.source_folder,
+        item_path = '%s/%s/%s' % (
+                current_app.static_folder,
                 self.cache_folder,
                 path.strip('/')
             )
 
-        return os.path.isfile(item_path)
+        if os.path.isfile(item_path):
+            return '%s/%s/%s' % (current_app.static_url_path, self.cache_folder, path.strip('/'))
+        else:
+            return False
 
     def remove_cached_item(self, path):
         """
@@ -121,9 +126,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         :param path: string
         :return:
         """
-        item_path = '%s/%s/%s/%s' % (
-                current_app.root_path,
-                self.source_folder,
+        item_path = '%s/%s/%s' % (
+                current_app.static_folder,
                 self.cache_folder,
                 path.strip('/')
             )

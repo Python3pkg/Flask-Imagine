@@ -47,6 +47,7 @@ class CropFilter(ImagineFilterInterface):
         right = self.start[0] + self.size[0]
         lower = self.start[1] + self.size[1]
 
+        resource_format = resource.format
         resource = resource.crop(
             (
                 left,
@@ -55,5 +56,6 @@ class CropFilter(ImagineFilterInterface):
                 lower if lower < original_height else original_height
             )
         )
+        resource.format = resource_format
 
         return resource

@@ -40,6 +40,8 @@ class ThumbnailFilter(ImagineFilterInterface):
 
         original_width, original_height = resource.size
 
+        resource_format = resource.format
+
         if self.mode == 'outbound':
             target_width, target_height = self.outbound_sizes(original_width, original_height, self.width, self.height)
             resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
@@ -49,6 +51,8 @@ class ThumbnailFilter(ImagineFilterInterface):
         else:
             target_width, target_height = self.inset_sizes(original_width, original_height, self.width, self.height)
             resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
+
+        resource.format = resource_format
 
         return resource
 

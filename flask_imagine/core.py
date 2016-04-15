@@ -3,6 +3,7 @@ Flask Imagine extension.
 """
 import logging
 
+from StringIO import StringIO
 from flask import current_app, abort, redirect
 
 from .adapters import ImagineFilesystemAdapter
@@ -32,6 +33,7 @@ class Imagine(object):
 
     filter_sets = {}
     adapter = None
+    redirect_code = 302
 
     def __init__(self, app=None):
         """
@@ -49,6 +51,8 @@ class Imagine(object):
         app.extensions['imagine'] = self
 
         self._set_defaults(app)
+
+        self.redirect_code = app.config['IMAGINE_CACHE_REDIRECT_CODE']
 
         if isinstance(app.config['IMAGINE_ADAPTERS'], dict):
             self.adapters.update(app.config['IMAGINE_ADAPTERS'])
@@ -70,14 +74,13 @@ class Imagine(object):
         app.config.setdefault('IMAGINE_URL', '/media/cache/resolve')
         app.config.setdefault('IMAGINE_NAME', 'imagine')
         app.config.setdefault('IMAGINE_CACHE_ENABLED', True)
+        app.config.setdefault('IMAGINE_CACHE_REDIRECT_CODE', 302)
 
         app.config.setdefault('IMAGINE_ADAPTERS', {})
         app.config.setdefault('IMAGINE_FILTERS', {})
 
         app.config.setdefault('IMAGINE_ADAPTER', {
             'name': 'fs',
-            'source_folder': 'static',
-            'cache_folder': 'cache'
         })
 
         app.config.setdefault('IMAGINE_FILTER_SETS', {})
@@ -153,14 +156,9 @@ class Imagine(object):
         """
         if filter_name in self.filter_sets:
             if self.filter_sets[filter_name]['cached']:
-                if self.adapter.check_cached_item('%s/%s' % (filter_name, path)):
-                    return redirect(
-                        '%s/%s/%s' % (
-                            self.adapter.source_folder,
-                            self.adapter.cache_folder,
-                            '%s/%s' % (filter_name, path)
-                        )
-                    )
+                cached_item_path = self.adapter.check_cached_item('%s/%s' % (filter_name, path))
+                if cached_item_path:
+                    return redirect(cached_item_path, self.redirect_code)
 
             resource = self.adapter.get_item(path)
 
@@ -168,7 +166,15 @@ class Imagine(object):
                 for filter_item in self.filter_sets[filter_name]['filters']:
                     resource = filter_item.apply(resource)
 
-                return redirect(self.adapter.create_cached_item('%s/%s' % (filter_name, path), resource))
+                if self.filter_sets[filter_name]['cached']:
+                    return redirect(
+                        self.adapter.create_cached_item('%s/%s' % (filter_name, path), resource),
+                        self.redirect_code
+                    )
+                else:
+                    output = StringIO()
+                    resource.save(output, format=resource.format)
+                    return output.getvalue()
             else:
                 LOGGER.warning('File "%s" not found.' % path)
                 abort(404)
@@ -197,4 +203,3 @@ def imagine_cache_clear(path, filter_name=None):
     """
     self = current_app.extensions['imagine']
     self.clear_cache(path, filter_name)
-

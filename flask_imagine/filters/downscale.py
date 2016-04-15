@@ -41,6 +41,8 @@ class DownscaleFilter(ImagineFilterInterface):
                 target_height = self.size[1]
                 target_width = int(target_height * k)
 
+            resource_format = resource.format
             resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
+            resource.format = resource_format
 
         return resource

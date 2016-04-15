@@ -35,8 +35,6 @@ class TestCase(unittest.TestCase):
 
         app.config['IMAGINE_ADAPTER'] = {
             'name': 'fs',
-            'source_folder': '/static/',
-            'cache_folder': '/cache/'
         }
 
         app.config['IMAGINE_FILTER_SETS'] = {

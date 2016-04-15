@@ -64,6 +64,7 @@ class WatermarkFilter(ImagineFilterInterface):
         if not isinstance(resource, Image.Image):
             raise ValueError('Unknown resource format')
 
+        resource_format = resource.format
         if resource.mode != 'RGBA':  # pragma: no cover
             resource = resource.convert('RGBA')
 
@@ -71,7 +72,10 @@ class WatermarkFilter(ImagineFilterInterface):
         image, left, upper = getattr(self, '_' + self.position + '_position')(resource)
         layer.paste(image, (left, upper))
 
-        return Image.composite(layer, resource, layer)
+        image = Image.composite(layer, resource, layer)
+        image.format = resource_format
+
+        return image
 
     def _top_left_position(self, resource):
         """

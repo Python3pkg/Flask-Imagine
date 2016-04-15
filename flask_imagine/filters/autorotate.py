@@ -34,6 +34,8 @@ class AutorotateFilter(ImagineFilterInterface):
                 }
 
                 if orientation in rotate_values:
+                    resource_format = resource.format
                     resource = resource.rotate(rotate_values[orientation])
+                    resource.format = resource_format
 
         return resource

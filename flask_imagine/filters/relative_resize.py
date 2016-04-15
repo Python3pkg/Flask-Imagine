@@ -119,6 +119,8 @@ class RelativeResizeFilter(ImagineFilterInterface):
         target_width = int(round(original_width * self.value))
         target_height = int(round(original_height * self.value))
 
+        resource_format = resource.format
         resource = resource.resize((target_width, target_height), Image.ANTIALIAS)
+        resource.format = resource_format
 
         return resource
