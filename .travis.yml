@@ -18,7 +18,9 @@ before_install:
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so.8 ~/virtualenv/python2.7/lib/
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so ~/virtualenv/python2.7/lib/
   - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so ~/virtualenv/python2.7/lib/
-  - pip install -r requirements.txt
+  - pip install Pillow==3.1.2
+  - pip install six>=1.10.0
+  - pip install itsdangerous>=0.24
   - pip install nose
   - pip install codecov
 
