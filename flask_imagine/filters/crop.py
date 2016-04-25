@@ -12,17 +12,18 @@ class CropFilter(ImagineFilterInterface):
     start = None
     size = None
 
-    def __init__(self, **kwargs):
+    def __init__(self, start, size):
         """
-        :param kwargs: dict
+        :param start: list
+        :param size: list
         """
-        if 'start' in kwargs and isinstance(kwargs['start'], list) and len(kwargs['start']) == 2:
-            self.start = kwargs.get('start')
+        if isinstance(start, list) and len(start) == 2:
+            self.start = start
         else:
             raise ValueError('Unknown start position.')
 
-        if 'size' in kwargs and isinstance(kwargs['size'], list) and len(kwargs['size']) == 2:
-            self.size = kwargs.get('size')
+        if isinstance(size, list) and len(size) == 2:
+            self.size = size
         else:
             raise ValueError('Unknown image size.')
 

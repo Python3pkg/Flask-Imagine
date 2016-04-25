@@ -1,6 +1,7 @@
 """
 This module implement a filesystem storage adapter.
 """
+from __future__ import unicode_literals
 import errno
 import logging
 import os
@@ -20,7 +21,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
 
     def __init__(self, **kwargs):
         """
-        Init adapter
+        Init _adapter
         :param kwargs: parameters
         :return:
         """
@@ -46,13 +47,11 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
                     path.strip('/')
                 )
 
-        print item_path
-
         if os.path.isfile(item_path):
             try:
                 return Image.open(item_path)
-            except IOError, e:
-                LOGGER.warning('File not found on path "%s" with error: %s' % (item_path, unicode(e)))
+            except IOError as e:
+                LOGGER.warning('File not found on path "%s" with error: %s' % (item_path, str(e)))
                 return False
         else:
             return False
@@ -97,8 +96,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         if os.path.isfile(item_path):
             try:
                 return Image.open(item_path)
-            except IOError, e:  # pragma: no cover
-                LOGGER.warning('Cached file not found on path "%s" with error: %s' % (item_path, unicode(e)))
+            except IOError as e:  # pragma: no cover
+                LOGGER.warning('Cached file not found on path "%s" with error: %s' % (item_path, str(e)))
                 return False
         else:
             return False
@@ -148,5 +147,5 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
             os.makedirs(os.path.dirname(path))
         except OSError as e:
             if e.errno != errno.EEXIST:
-                LOGGER.error('Failed to create directory %s with error: %s' % (path, unicode(e)))
+                LOGGER.error('Failed to create directory %s with error: %s' % (path, str(e)))
                 raise

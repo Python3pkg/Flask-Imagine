@@ -1,6 +1,7 @@
 """
 This module implement a Relative resize filter.
 """
+from __future__ import unicode_literals
 from .interface import ImagineFilterInterface
 from PIL import Image
 
@@ -27,13 +28,13 @@ class RelativeResizeFilter(ImagineFilterInterface):
         if self.method == 'scale':
             try:
                 self.value = float(kwargs[self.method])
-            except Exception, e:
-                raise ValueError('Wrong value type: %s' % unicode(e))
+            except Exception as e:
+                raise ValueError('Wrong value type: %s' % str(e))
         else:
             try:
                 self.value = int(kwargs[self.method])
-            except Exception, e:
-                raise ValueError('Wrong value type: %s' % unicode(e))
+            except Exception as e:
+                raise ValueError('Wrong value type: %s' % str(e))
 
     def apply(self, resource):
         """

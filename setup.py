@@ -16,13 +16,13 @@ setup(
     author_email='kronas.sw@gmail.com',
     license='MIT',
 
-    packages=['flask_imagine', 'flask_imagine.adapters', 'flask_imagine.filters', 'flask_imagine.helpers'],
+    packages=['flask_imagine', 'flask_imagine._adapters', 'flask_imagine._filters', 'flask_imagine.helpers'],
 
     install_requires=[
 
         'Flask>=0.9',
-        'itsdangerous>=0.24',  # For Flask v0.9
         'Pillow==3.1.2',
+        'six>=1.10.0',
 
     ],
 

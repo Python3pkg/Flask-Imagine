@@ -166,221 +166,227 @@ class TestThumbnailFilter(unittest.TestCase):
         self.assertTupleEqual((0, 25, 80, 75), ThumbnailFilter.crop_sizes(80, 100, 100, 50))
 
     def test_inset_png(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='inset')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='inset')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((200, 100), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='inset')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='inset')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='inset')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
     def test_inset_jpg(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='inset')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='inset')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((200, 100), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='inset')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='inset')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='inset')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
     def test_inset_tif(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='inset')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='inset')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((200, 100), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='inset')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='inset')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='inset')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
     def test_inset_bmp(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='inset')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='inset')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((200, 100), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='inset')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='inset')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'inset'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='inset')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_outbound_png(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='outbound')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((100, 100), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='outbound')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((500, 100), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='outbound')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((100, 50), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='outbound')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((1000, 50), image_png.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='outbound')
         image_png = copy(self.image_png)
         image_png = thumbnail_filter.apply(image_png)
         self.assertTupleEqual((1000, 500), image_png.size)
 
     def test_outbound_jpg(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='outbound')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((100, 100), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='outbound')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((500, 100), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='outbound')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((100, 50), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='outbound')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((1000, 50), image_jpg.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='outbound')
         image_jpg = copy(self.image_jpg)
         image_jpg = thumbnail_filter.apply(image_jpg)
         self.assertTupleEqual((1000, 500), image_jpg.size)
 
     def test_outbound_tif(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='outbound')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((100, 100), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='outbound')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((500, 100), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='outbound')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((100, 50), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='outbound')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((1000, 50), image_tif.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='outbound')
         image_tif = copy(self.image_tif)
         image_tif = thumbnail_filter.apply(image_tif)
         self.assertTupleEqual((1000, 500), image_tif.size)
 
     def test_outbound_bmp(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='outbound')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((100, 100), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [500, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[500, 100], mode='outbound')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((500, 100), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 50], mode='outbound')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((100, 50), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 50], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 50], mode='outbound')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((1000, 50), image_bmp.size)
 
-        thumbnail_filter = ThumbnailFilter(**{'size': [2000, 1000], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[2000, 1000], mode='outbound')
         image_bmp = copy(self.image_bmp)
         image_bmp = thumbnail_filter.apply(image_bmp)
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_wrong_thumbnail_size(self):
         with self.assertRaises(ValueError):
-            ThumbnailFilter(**{})
+            ThumbnailFilter(size='', mode='inset')
 
         with self.assertRaises(ValueError):
-            ThumbnailFilter(**{'size': 'size'})
+            ThumbnailFilter(size=[100, 100], mode='')
+
+        with self.assertRaises(ValueError):
+            ThumbnailFilter(size=[100], mode='')
+
+        with self.assertRaises(TypeError):
+            ThumbnailFilter(size='size')
 
     def test_wrong_resource_type(self):
-        thumbnail_filter = ThumbnailFilter(**{'size': [100, 100], 'mode': 'outbound'})
+        thumbnail_filter = ThumbnailFilter(size=[100, 100], mode='outbound')
         with self.assertRaises(ValueError):
             thumbnail_filter.apply('')

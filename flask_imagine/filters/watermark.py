@@ -1,6 +1,7 @@
 """
 This module implement a Watermark filter.
 """
+from __future__ import unicode_literals, division
 import os
 from flask import current_app
 
@@ -33,8 +34,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.size = float(kwargs.get('size'))
                 assert 0 <= self.size <= 1
-            except Exception, e:
-                raise ValueError('Unsupported size format: %s' % unicode(e))
+            except Exception as e:
+                raise ValueError('Unsupported size format: %s' % str(e))
         else:
             raise ValueError('Watermark size doesn\'t set.')
 
@@ -50,8 +51,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.opacity = float(kwargs.get('opacity', 0.3))
                 assert 0 <= self.opacity <= 1
-            except Exception, e:
-                raise ValueError('Unsupported opacity format: %s' % unicode(e))
+            except Exception as e:
+                raise ValueError('Unsupported opacity format: %s' % str(e))
         else:
             self.opacity = 0.3
 
@@ -80,7 +81,6 @@ class WatermarkFilter(ImagineFilterInterface):
     def _top_left_position(self, resource):
         """
         Place watermark to top left position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
@@ -91,13 +91,12 @@ class WatermarkFilter(ImagineFilterInterface):
     def _top_position(self, resource):
         """
         Place watermark to top position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
         image = self._get_scaled_image(resource)
 
-        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
+        left = int(round(resource.size[0] // 2 - image.size[0] // 2))
         upper = 0
 
         return image, left, upper
@@ -105,7 +104,6 @@ class WatermarkFilter(ImagineFilterInterface):
     def _top_right_position(self, resource):
         """
         Place watermark to top right position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
@@ -119,49 +117,45 @@ class WatermarkFilter(ImagineFilterInterface):
     def _left_position(self, resource):
         """
         Place watermark to left position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
         image = self._get_scaled_image(resource)
 
         left = 0
-        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
+        upper = int(round(resource.size[1] // 2 - image.size[1] // 2))
 
         return image, left, upper
 
     def _center_position(self, resource):
         """
         Place watermark to center position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
         image = self._get_scaled_image(resource)
 
-        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
-        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
+        left = int(round(resource.size[0] // 2 - image.size[0] // 2))
+        upper = int(round(resource.size[1] // 2 - image.size[1] // 2))
 
         return image, left, upper
 
     def _right_position(self, resource):
         """
         Place watermark to right position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
         image = self._get_scaled_image(resource)
 
         left = int(round(resource.size[0] - image.size[0]))
-        upper = int(round(resource.size[1] / 2 - image.size[1] / 2))
+        upper = int(round(resource.size[1] // 2 - image.size[1] // 2))
 
         return image, left, upper
 
     def _bottom_left_position(self, resource):
         """
         Place watermark to bottom left position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
@@ -175,13 +169,12 @@ class WatermarkFilter(ImagineFilterInterface):
     def _bottom_position(self, resource):
         """
         Place watermark to bottom position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
         image = self._get_scaled_image(resource)
 
-        left = int(round(resource.size[0] / 2 - image.size[0] / 2))
+        left = int(round(resource.size[0] // 2 - image.size[0] // 2))
         upper = int(round(resource.size[1] - image.size[1]))
 
         return image, left, upper
@@ -189,7 +182,6 @@ class WatermarkFilter(ImagineFilterInterface):
     def _bottom_right_position(self, resource):
         """
         Place watermark to bottom right position
-        :param layer: Image.Image
         :param resource: Image.Image
         :return: Image.Image
         """
@@ -210,8 +202,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.image = Image.open(image_path)
                 self._reduce_opacity()
-            except Exception, e:
-                raise ValueError('Unsupported watermark format: %s' % unicode(e))
+            except Exception as e:
+                raise ValueError('Unsupported watermark format: %s' % str(e))
 
         return self.image
 

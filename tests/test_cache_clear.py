@@ -5,27 +5,27 @@ from . import TestCase
 
 class TestCacheClear(TestCase):
     def test_direct_cache_clear(self):
-        url = url_for('imagine', path='flask.png', filter_name='test_scale', _external=False)
+        url = url_for('imagine', path='flask.png', filter_name='test_scale_cached', _external=False)
 
         response = self.client.get(url)
         self.assert302(response)
 
-        imagine_cache_clear('flask.png', 'test_scale')
+        imagine_cache_clear('flask.png', 'test_scale_cached')
 
-        url = url_for('imagine', path='flask.png', filter_name='test_scale', _external=False)
+        url = url_for('imagine', path='flask.png', filter_name='test_scale_cached', _external=False)
 
         response = self.client.get(url)
         self.assert302(response)
 
     def test_batch_cache_clear(self):
-        url = url_for('imagine', path='flask.png', filter_name='test_scale', _external=False)
+        url = url_for('imagine', path='flask.png', filter_name='test_scale_cached', _external=False)
 
         response = self.client.get(url)
         self.assert302(response)
 
         imagine_cache_clear('flask.png')
 
-        url = url_for('imagine', path='flask.png', filter_name='test_scale', _external=False)
+        url = url_for('imagine', path='flask.png', filter_name='test_scale_cached', _external=False)
 
         response = self.client.get(url)
         self.assert302(response)

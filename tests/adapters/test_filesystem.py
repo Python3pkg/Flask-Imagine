@@ -11,7 +11,7 @@ class TestSuccessImagineFilesystemAdapter(TestCase):
     def setUp(self):
         super(TestSuccessImagineFilesystemAdapter, self).setUp()
 
-        self.adapter = self.app.extensions['imagine'].adapter
+        self.adapter = self.app.extensions['imagine']._adapter
 
     def test_filesystem_adapter_success(self):
         image = self.adapter.get_item('flask.png')
@@ -40,6 +40,9 @@ class TestSuccessImagineFilesystemAdapter(TestCase):
         self.assertFalse(cached_image_path)
 
         cached_item = self.adapter.check_cached_item('cached_image.png')
+        self.assertFalse(cached_item)
+
+        cached_item = self.adapter.get_cached_item('cached_image.png')
         self.assertFalse(cached_item)
 
     def test_make_dirs_method(self):

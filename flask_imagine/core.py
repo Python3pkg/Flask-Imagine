@@ -1,13 +1,15 @@
 """
 Flask Imagine extension.
 """
+from __future__ import unicode_literals
 import logging
 
-from StringIO import StringIO
+from io import BytesIO
 from flask import current_app, abort, redirect
 
-from .adapters import ImagineFilesystemAdapter
-from .filters import *
+from flask.ext.imagine.adapters import *
+from flask.ext.imagine.filters import *
+
 from .helpers.regex_route import RegexConverter
 
 LOGGER = logging.getLogger(__file__)
@@ -17,10 +19,10 @@ class Imagine(object):
     """
     Flask Imagine extension
     """
-    adapters = {
+    _adapters = {
         'fs': ImagineFilesystemAdapter
     }
-    filters = {
+    _filters = {
         'autorotate': AutorotateFilter,
         'crop': CropFilter,
         'downscale': DownscaleFilter,
@@ -31,9 +33,9 @@ class Imagine(object):
         'watermark': WatermarkFilter
     }
 
-    filter_sets = {}
-    adapter = None
-    redirect_code = 302
+    _filter_sets = {}
+    _adapter = None
+    _redirect_code = 302
 
     def __init__(self, app=None):
         """
@@ -52,12 +54,12 @@ class Imagine(object):
 
         self._set_defaults(app)
 
-        self.redirect_code = app.config['IMAGINE_CACHE_REDIRECT_CODE']
+        self._redirect_code = app.config['IMAGINE_CACHE_REDIRECT_CODE']
 
         if isinstance(app.config['IMAGINE_ADAPTERS'], dict):
-            self.adapters.update(app.config['IMAGINE_ADAPTERS'])
+            self._adapters.update(app.config['IMAGINE_ADAPTERS'])
         if isinstance(app.config['IMAGINE_FILTERS'], dict):
-            self.filters.update(app.config['IMAGINE_FILTERS'])
+            self._filters.update(app.config['IMAGINE_FILTERS'])
 
         self._handle_adapter(app)
         self._handle_filter_sets(app)
@@ -89,17 +91,17 @@ class Imagine(object):
 
     def _handle_adapter(self, app):
         """
-        Handle storage adapter configuration
+        Handle storage _adapter configuration
         :param app: Flask application
         """
         if 'IMAGINE_ADAPTER' in app.config \
                 and 'name' in app.config['IMAGINE_ADAPTER'] \
-                and app.config['IMAGINE_ADAPTER']['name'] in self.adapters.keys():
-            self.adapter = self.adapters[app.config['IMAGINE_ADAPTER']['name']](
+                and app.config['IMAGINE_ADAPTER']['name'] in self._adapters.keys():
+            self._adapter = self._adapters[app.config['IMAGINE_ADAPTER']['name']](
                 **app.config['IMAGINE_ADAPTER']
             )
         else:
-            raise ValueError('Unknown adapter: %s' % unicode(app.config['IMAGINE_ADAPTER']))
+            raise ValueError('Unknown _adapter: %s' % str(app.config['IMAGINE_ADAPTER']))
 
     def _handle_filter_sets(self, app):
         """
@@ -107,12 +109,12 @@ class Imagine(object):
         :param app: Flask application
         """
         if 'IMAGINE_FILTER_SETS' in app.config and isinstance(app.config['IMAGINE_FILTER_SETS'], dict):
-            for filter_name, filters_settings in app.config['IMAGINE_FILTER_SETS'].iteritems():
+            for filter_name, filters_settings in app.config['IMAGINE_FILTER_SETS'].items():
                 filter_set = []
-                if isinstance(filters_settings, dict) and 'filters' in filters_settings:
-                    for filter_type, filter_settings in filters_settings['filters'].iteritems():
-                        if filter_type in self.filters:
-                            filter_item = self.filters[filter_type](**filter_settings)
+                if isinstance(filters_settings, dict) and '_filters' in filters_settings:
+                    for filter_type, filter_settings in filters_settings['_filters'].items():
+                        if filter_type in self._filters:
+                            filter_item = self._filters[filter_type](**filter_settings)
                             if isinstance(filter_item, ImagineFilterInterface):
                                 filter_set.append(filter_item)
                             else:
@@ -120,13 +122,13 @@ class Imagine(object):
                         else:
                             raise ValueError('Unknown filter type: %s' % filter_type)
 
-                    filter_config = {'filters': filter_set}
+                    filter_config = {'_filters': filter_set}
                     if 'cached' in filters_settings:
                         filter_config['cached'] = filters_settings['cached']
                     else:
                         filter_config['cached'] = app.config['IMAGINE_CACHE_ENABLED']
 
-                    self.filter_sets.update({filter_name: filter_config})
+                    self._filter_sets.update({filter_name: filter_config})
                 else:
                     raise ValueError('Wrong settings for filter: %s' % filter_name)
         else:
@@ -154,26 +156,26 @@ class Imagine(object):
         :param path: image_path
         :return:
         """
-        if filter_name in self.filter_sets:
-            if self.filter_sets[filter_name]['cached']:
-                cached_item_path = self.adapter.check_cached_item('%s/%s' % (filter_name, path))
+        if filter_name in self._filter_sets:
+            if self._filter_sets[filter_name]['cached']:
+                cached_item_path = self._adapter.check_cached_item('%s/%s' % (filter_name, path))
                 if cached_item_path:
-                    return redirect(cached_item_path, self.redirect_code)
+                    return redirect(cached_item_path, self._redirect_code)
 
-            resource = self.adapter.get_item(path)
+            resource = self._adapter.get_item(path)
 
             if resource:
-                for filter_item in self.filter_sets[filter_name]['filters']:
+                for filter_item in self._filter_sets[filter_name]['_filters']:
                     resource = filter_item.apply(resource)
 
-                if self.filter_sets[filter_name]['cached']:
+                if self._filter_sets[filter_name]['cached']:
                     return redirect(
-                        self.adapter.create_cached_item('%s/%s' % (filter_name, path), resource),
-                        self.redirect_code
+                        self._adapter.create_cached_item('%s/%s' % (filter_name, path), resource),
+                        self._redirect_code
                     )
                 else:
-                    output = StringIO()
-                    resource.save(output, format=resource.format)
+                    output = BytesIO()
+                    resource.save(output, format=str(resource.format))
                     return output.getvalue()
             else:
                 LOGGER.warning('File "%s" not found.' % path)
@@ -189,10 +191,45 @@ class Imagine(object):
         :param filter_name: str or None
         """
         if filter_name:
-            self.adapter.remove_cached_item('%s/%s' % (filter_name, path))
+            self._adapter.remove_cached_item('%s/%s' % (filter_name, path))
         else:
-            for filter_name in self.filter_sets.iterkeys():
-                self.adapter.remove_cached_item('%s/%s' % (filter_name, path))
+            for filter_name in self._filter_sets:
+                self._adapter.remove_cached_item('%s/%s' % (filter_name, path))
+
+    def add_filter_set(self, filter_name, filter_set, cached=True):
+        """
+        Manual addition of filter set
+        :param filter_name: str
+        :param filter_set: list
+        :param cached: bool
+        """
+        try:
+            hash(filter_name)
+        except TypeError as e:
+            raise ValueError('Filter set name must be as instance of hashable type: %s' % str(e))
+
+        if not isinstance(filter_set, list):
+            raise ValueError('Filters must be a list.')
+
+        if len(filter_set) == 0:
+            raise ValueError('Filters count must be greater than 0.')
+
+        for filter_instance in filter_set:
+            if not isinstance(filter_instance, ImagineFilterInterface):
+                raise ValueError('All filters must implement of ImagineFilterInterface.')
+
+        if not isinstance(cached, bool):
+            raise ValueError('Cached parameter must be a bool.')
+
+        filter_config = {
+            '_filters': filter_set,
+            'cached': cached
+        }
+
+        if filter_name not in self._filter_sets:
+            self._filter_sets.update({filter_name: filter_config})
+        else:
+            raise ValueError('Duplicate filter set name.')
 
 
 def imagine_cache_clear(path, filter_name=None):

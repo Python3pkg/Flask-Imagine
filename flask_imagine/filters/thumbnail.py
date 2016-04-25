@@ -14,20 +14,22 @@ class ThumbnailFilter(ImagineFilterInterface):
     width = 0
     height = 0
 
-    def __init__(self, **kwargs):
+    def __init__(self, size, mode):
         """
         Filter initialization
-        :param kwargs: parameters
+        :param size: list
+        :param mode: string
         """
-        if 'mode' in kwargs and kwargs['mode'] in self.modes:
-            self.mode = kwargs.pop('mode')
-
-        if 'size' in kwargs and isinstance(kwargs['size'], list) and len(kwargs['size']) == 2:
-            size = kwargs.pop('size', [0, 0])
+        if isinstance(size, list) and len(size) == 2:
             self.width = size[0]
             self.height = size[1]
         else:
             raise ValueError('Thumbnail size is not set.')
+
+        if mode in self.modes:
+            self.mode = mode
+        else:
+            raise ValueError('Unknown mode.')
 
     def apply(self, resource):
         """

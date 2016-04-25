@@ -28,43 +28,43 @@ class TestCropFilter(unittest.TestCase):
         self.image_bmp = Image.open(image_bmp_path)
 
     def test_wrong_init_parameters(self):
-        with self.assertRaises(ValueError):
-            CropFilter(**{})
+        with self.assertRaises(TypeError):
+            CropFilter()
+
+        with self.assertRaises(TypeError):
+            CropFilter(start='string')
+
+        with self.assertRaises(TypeError):
+            CropFilter(size='string')
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': 'string'})
+            CropFilter(start='string', size='string')
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'size': 'string'})
+            CropFilter(start='string', size=[100, 100])
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': 'string', 'size': 'string'})
+            CropFilter(start=[0, 0], size='string')
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': 'string', 'size': [100, 100]})
+            CropFilter(start=[1], size=[100, 100])
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': [0, 0], 'size': 'string'})
+            CropFilter(start=[0, 0], size=[100])
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': [1], 'size': [100, 100]})
+            CropFilter(start=[1, 2, 3], size=[100, 100])
 
         with self.assertRaises(ValueError):
-            CropFilter(**{'start': [0, 0], 'size': [100]})
-
-        with self.assertRaises(ValueError):
-            CropFilter(**{'start': [1, 2, 3], 'size': [100, 100]})
-
-        with self.assertRaises(ValueError):
-            CropFilter(**{'start': [0, 0], 'size': [100, 100, 100]})
+            CropFilter(start=[0, 0], size=[100, 100, 100])
 
     def test_wrong_resource_type(self):
-        crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
+        crop = CropFilter(start=[0, 0], size=[800, 600])
         with self.assertRaises(ValueError):
             crop.apply('string')
 
     def test_success_horizontal_with_start_from_zero(self):
-        crop = CropFilter(**{'start': [0, 0], 'size': [800, 600]})
+        crop = CropFilter(start=[0, 0], size=[800, 600])
 
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
@@ -83,7 +83,7 @@ class TestCropFilter(unittest.TestCase):
         self.assertTupleEqual((800, 500), image_bmp.size)
 
     def test_success_horizontal_with_start_from_point(self):
-        crop = CropFilter(**{'start': [100, 100], 'size': [800, 600]})
+        crop = CropFilter(start=[100, 100], size=[800, 600])
 
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
@@ -102,7 +102,7 @@ class TestCropFilter(unittest.TestCase):
         self.assertTupleEqual((800, 400), image_bmp.size)
 
     def test_success_with_oversize(self):
-        crop = CropFilter(**{'start': [0, 0], 'size': [1500, 1000]})
+        crop = CropFilter(start=[0, 0], size=[1500, 1000])
 
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)
@@ -121,7 +121,7 @@ class TestCropFilter(unittest.TestCase):
         self.assertTupleEqual((1000, 500), image_bmp.size)
 
     def test_error_with_out_of_range(self):
-        crop = CropFilter(**{'start': [1000, 1000], 'size': [1500, 1000]})
+        crop = CropFilter(start=[1000, 1000], size=[1500, 1000])
 
         image_png = copy(self.image_png)
         image_png = crop.apply(image_png)

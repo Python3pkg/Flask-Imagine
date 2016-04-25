@@ -1,6 +1,7 @@
 """
 This module implement a Downscale filter.
 """
+from __future__ import division
 from .interface import ImagineFilterInterface
 from PIL import Image
 
@@ -32,7 +33,7 @@ class DownscaleFilter(ImagineFilterInterface):
         original_width, original_height = resource.size
 
         if original_width > self.size[0] or original_height > self.size[1]:
-            k = original_width / float(original_height)
+            k = original_width / original_height
 
             if original_width >= original_height:
                 target_width = self.size[0]
