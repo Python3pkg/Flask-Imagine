@@ -78,3 +78,21 @@ class TestSuccessImagineFilesystemAdapter(TestCase):
 
         imagine = Imagine(app)
         self.assertTrue(isinstance(imagine, Imagine))
+
+    def test_get_item_with_folder(self):
+        app = Flask(__name__)
+        app.root_path = os.path.abspath(os.path.normpath(os.path.dirname(__file__) + '/../'))
+        app.config['TESTING'] = True
+        app.config['SERVER_NAME'] = 'localhost'
+        app.config['SECRET_KEY'] = 'secret secret'
+
+        app.config['IMAGINE_ADAPTER'] = {
+            'name': 'fs',
+            'source_folder': 'images'
+        }
+
+        imagine = Imagine(app)
+        self.assertTrue(isinstance(imagine, Imagine))
+
+        image = imagine._adapter.get_item('flask.png')
+        self.assertTrue(isinstance(image, Image.Image))

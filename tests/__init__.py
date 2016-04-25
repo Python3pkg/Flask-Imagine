@@ -40,13 +40,13 @@ class TestCase(unittest.TestCase):
         app.config['IMAGINE_FILTER_SETS'] = {
             'test_scale_cached': {
                 'cached': True,
-                '_filters': {
+                'filters': {
                     'thumbnail': {'size': [100, 100], 'mode': 'inset'}
                 }
             },
             'test_scale_dynamic': {
                 'cached': False,
-                '_filters': {
+                'filters': {
                     'thumbnail': {'size': [100, 100], 'mode': 'inset'}
                 }
             }

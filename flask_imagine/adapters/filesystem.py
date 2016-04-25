@@ -41,7 +41,6 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
                     path.strip('/')
                 )
         else:
-
             item_path = '%s/%s' % (
                     current_app.static_folder,
                     path.strip('/')

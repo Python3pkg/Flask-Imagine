@@ -111,8 +111,8 @@ class Imagine(object):
         if 'IMAGINE_FILTER_SETS' in app.config and isinstance(app.config['IMAGINE_FILTER_SETS'], dict):
             for filter_name, filters_settings in app.config['IMAGINE_FILTER_SETS'].items():
                 filter_set = []
-                if isinstance(filters_settings, dict) and '_filters' in filters_settings:
-                    for filter_type, filter_settings in filters_settings['_filters'].items():
+                if isinstance(filters_settings, dict) and 'filters' in filters_settings:
+                    for filter_type, filter_settings in filters_settings['filters'].items():
                         if filter_type in self._filters:
                             filter_item = self._filters[filter_type](**filter_settings)
                             if isinstance(filter_item, ImagineFilterInterface):
@@ -122,7 +122,7 @@ class Imagine(object):
                         else:
                             raise ValueError('Unknown filter type: %s' % filter_type)
 
-                    filter_config = {'_filters': filter_set}
+                    filter_config = {'filters': filter_set}
                     if 'cached' in filters_settings:
                         filter_config['cached'] = filters_settings['cached']
                     else:
@@ -165,7 +165,7 @@ class Imagine(object):
             resource = self._adapter.get_item(path)
 
             if resource:
-                for filter_item in self._filter_sets[filter_name]['_filters']:
+                for filter_item in self._filter_sets[filter_name]['filters']:
                     resource = filter_item.apply(resource)
 
                 if self._filter_sets[filter_name]['cached']:
@@ -222,7 +222,7 @@ class Imagine(object):
             raise ValueError('Cached parameter must be a bool.')
 
         filter_config = {
-            '_filters': filter_set,
+            'filters': filter_set,
             'cached': cached
         }
 
@@ -230,6 +230,51 @@ class Imagine(object):
             self._filter_sets.update({filter_name: filter_config})
         else:
             raise ValueError('Duplicate filter set name.')
+
+    def update_filter_set(self, filter_name, filter_set=None, cached=None):
+        """
+        Manual update of filter set
+        :param filter_name: str
+        :param filter_set: list
+        :param cached: bool
+        """
+        try:
+            hash(filter_name)
+        except TypeError as err:
+            raise ValueError('Filter set name must be as instance of hashable type: %s' % str(err))
+
+        filter_config = self._filter_sets[filter_name]
+
+        if filter_set is not None:
+            if not isinstance(filter_set, list):
+                raise ValueError('Filters must be a list.')
+
+            if len(filter_set) == 0:
+                raise ValueError('Filters count must be greater than 0.')
+
+            for filter_instance in filter_set:
+                if not isinstance(filter_instance, ImagineFilterInterface):
+                    raise ValueError('All filters must implement of ImagineFilterInterface.')
+
+            filter_config.update({'filters': filter_set})
+
+        if cached is not None:
+            if not isinstance(cached, bool):
+                raise ValueError('Cached parameter must be a bool.')
+
+            filter_config.update({'cached': cached})
+
+        self._filter_sets.update({filter_name: filter_config})
+
+    def remove_filter_set(self, filter_name):
+        """
+        Remove filter set by name
+        :param filter_name: str
+        """
+        if filter_name in self._filter_sets:
+            del(self._filter_sets[filter_name])
+        else:
+            raise ValueError('Unknown filter set name.')
 
 
 def imagine_cache_clear(path, filter_name=None):

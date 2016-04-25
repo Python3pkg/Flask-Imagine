@@ -71,7 +71,7 @@ class TestCoreMethods(TestCase):
 
         app.config['IMAGINE_FILTER_SETS'] = {
             'test_scale': {
-                '_filters': {
+                'filters': {
                     'thumbnail': {'size': [100, 100], 'mode': 'inset'}
                 }
             }
