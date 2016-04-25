@@ -272,7 +272,7 @@ class Imagine(object):
         :param filter_name: str
         """
         if filter_name in self._filter_sets:
-            del(self._filter_sets[filter_name])
+            del self._filter_sets[filter_name]
         else:
             raise ValueError('Unknown filter set name.')
 

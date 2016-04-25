@@ -31,7 +31,7 @@ Configuration guide
 
     app.config['IMAGINE_ADAPTER'] = {
         'name': 'fs',
-        'source_folder': 'static',
+        'source_folder': 'images',
         'cache_folder': 'cache'
     }
 
