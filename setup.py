@@ -16,7 +16,7 @@ setup(
     author_email='kronas.sw@gmail.com',
     license='MIT',
 
-    packages=['flask_imagine', 'flask_imagine._adapters', 'flask_imagine._filters', 'flask_imagine.helpers'],
+    packages=['flask_imagine', 'flask_imagine.adapters', 'flask_imagine.filters', 'flask_imagine.helpers'],
 
     install_requires=[
 
