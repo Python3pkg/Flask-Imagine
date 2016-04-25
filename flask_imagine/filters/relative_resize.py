@@ -28,13 +28,13 @@ class RelativeResizeFilter(ImagineFilterInterface):
         if self.method == 'scale':
             try:
                 self.value = float(kwargs[self.method])
-            except Exception as e:
-                raise ValueError('Wrong value type: %s' % str(e))
+            except Exception as err:
+                raise ValueError('Wrong value type: %s' % str(err))
         else:
             try:
                 self.value = int(kwargs[self.method])
-            except Exception as e:
-                raise ValueError('Wrong value type: %s' % str(e))
+            except Exception as err:
+                raise ValueError('Wrong value type: %s' % str(err))
 
     def apply(self, resource):
         """

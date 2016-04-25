@@ -1,5 +1,5 @@
 """
-This module implement a Upscale filter.
+This module implement a upscale filter.
 """
 from .interface import ImagineFilterInterface
 from PIL import Image

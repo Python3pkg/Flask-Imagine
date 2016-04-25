@@ -1,5 +1,5 @@
 """
-This module implement a Downscale filter.
+This module implement a downscale filter.
 """
 from __future__ import division
 from .interface import ImagineFilterInterface

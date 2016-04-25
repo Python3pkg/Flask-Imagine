@@ -146,6 +146,6 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         try:
             os.makedirs(os.path.dirname(path))
         except OSError as err:
-            if e.errno != errno.EEXIST:
+            if err.errno != errno.EEXIST:
                 LOGGER.error('Failed to create directory %s with error: %s' % (path, str(err)))
                 raise
