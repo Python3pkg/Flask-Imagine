@@ -20,8 +20,7 @@ setup(
 
     install_requires=[
 
-        'Flask>=0.9',
-        'itsdangerous>=0.24',  # For Flask v0.9
+        'Flask>=0.10',
         'Pillow==3.1.2',
         'six>=1.10.0',
 

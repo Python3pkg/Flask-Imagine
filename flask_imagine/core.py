@@ -205,8 +205,8 @@ class Imagine(object):
         """
         try:
             hash(filter_name)
-        except TypeError as e:
-            raise ValueError('Filter set name must be as instance of hashable type: %s' % str(e))
+        except TypeError as err:
+            raise ValueError('Filter set name must be as instance of hashable type: %s' % str(err))
 
         if not isinstance(filter_set, list):
             raise ValueError('Filters must be a list.')

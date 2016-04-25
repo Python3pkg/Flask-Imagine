@@ -50,8 +50,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         if os.path.isfile(item_path):
             try:
                 return Image.open(item_path)
-            except IOError as e:
-                LOGGER.warning('File not found on path "%s" with error: %s' % (item_path, str(e)))
+            except IOError as err:
+                LOGGER.warning('File not found on path "%s" with error: %s' % (item_path, str(err)))
                 return False
         else:
             return False
@@ -96,8 +96,8 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         if os.path.isfile(item_path):
             try:
                 return Image.open(item_path)
-            except IOError as e:  # pragma: no cover
-                LOGGER.warning('Cached file not found on path "%s" with error: %s' % (item_path, str(e)))
+            except IOError as err:  # pragma: no cover
+                LOGGER.warning('Cached file not found on path "%s" with error: %s' % (item_path, str(err)))
                 return False
         else:
             return False
@@ -145,7 +145,7 @@ class ImagineFilesystemAdapter(ImagineAdapterInterface):
         """
         try:
             os.makedirs(os.path.dirname(path))
-        except OSError as e:
+        except OSError as err:
             if e.errno != errno.EEXIST:
-                LOGGER.error('Failed to create directory %s with error: %s' % (path, str(e)))
+                LOGGER.error('Failed to create directory %s with error: %s' % (path, str(err)))
                 raise

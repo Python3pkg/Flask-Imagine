@@ -34,8 +34,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.size = float(kwargs.get('size'))
                 assert 0 <= self.size <= 1
-            except Exception as e:
-                raise ValueError('Unsupported size format: %s' % str(e))
+            except Exception as err:
+                raise ValueError('Unsupported size format: %s' % str(err))
         else:
             raise ValueError('Watermark size doesn\'t set.')
 
@@ -51,8 +51,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.opacity = float(kwargs.get('opacity', 0.3))
                 assert 0 <= self.opacity <= 1
-            except Exception as e:
-                raise ValueError('Unsupported opacity format: %s' % str(e))
+            except Exception as err:
+                raise ValueError('Unsupported opacity format: %s' % str(err))
         else:
             self.opacity = 0.3
 
@@ -202,8 +202,8 @@ class WatermarkFilter(ImagineFilterInterface):
             try:
                 self.image = Image.open(image_path)
                 self._reduce_opacity()
-            except Exception as e:
-                raise ValueError('Unsupported watermark format: %s' % str(e))
+            except Exception as err:
+                raise ValueError('Unsupported watermark format: %s' % str(err))
 
         return self.image
 
