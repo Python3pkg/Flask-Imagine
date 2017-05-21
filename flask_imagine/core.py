@@ -1,7 +1,7 @@
 """
 Flask Imagine extension.
 """
-from __future__ import unicode_literals
+
 import logging
 
 from io import BytesIO
@@ -96,7 +96,7 @@ class Imagine(object):
         """
         if 'IMAGINE_ADAPTER' in app.config \
                 and 'name' in app.config['IMAGINE_ADAPTER'] \
-                and app.config['IMAGINE_ADAPTER']['name'] in self._adapters.keys():
+                and app.config['IMAGINE_ADAPTER']['name'] in list(self._adapters.keys()):
             self._adapter = self._adapters[app.config['IMAGINE_ADAPTER']['name']](
                 **app.config['IMAGINE_ADAPTER']
             )
@@ -109,10 +109,10 @@ class Imagine(object):
         :param app: Flask application
         """
         if 'IMAGINE_FILTER_SETS' in app.config and isinstance(app.config['IMAGINE_FILTER_SETS'], dict):
-            for filter_name, filters_settings in app.config['IMAGINE_FILTER_SETS'].items():
+            for filter_name, filters_settings in list(app.config['IMAGINE_FILTER_SETS'].items()):
                 filter_set = []
                 if isinstance(filters_settings, dict) and 'filters' in filters_settings:
-                    for filter_type, filter_settings in filters_settings['filters'].items():
+                    for filter_type, filter_settings in list(filters_settings['filters'].items()):
                         if filter_type in self._filters:
                             filter_item = self._filters[filter_type](**filter_settings)
                             if isinstance(filter_item, ImagineFilterInterface):

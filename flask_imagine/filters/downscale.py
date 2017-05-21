@@ -1,7 +1,7 @@
 """
 This module implement a downscale filter.
 """
-from __future__ import division
+
 from .interface import ImagineFilterInterface
 from PIL import Image
 

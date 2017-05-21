@@ -1,7 +1,7 @@
 """
 This module implement a Relative resize filter.
 """
-from __future__ import unicode_literals
+
 from .interface import ImagineFilterInterface
 from PIL import Image
 

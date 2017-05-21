@@ -1,7 +1,7 @@
 """
 This module implement a Watermark filter.
 """
-from __future__ import unicode_literals, division
+
 import os
 from flask import current_app
 

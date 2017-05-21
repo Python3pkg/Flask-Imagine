@@ -1,7 +1,7 @@
 """
 This module implement a filesystem storage adapter.
 """
-from __future__ import unicode_literals
+
 import errno
 import logging
 import os
